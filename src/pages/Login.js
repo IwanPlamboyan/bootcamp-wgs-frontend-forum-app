@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom'; // mengimport hooks useNavigate untuk redirect
 import { useDispatch, useSelector } from 'react-redux'; // mengimport hooks useDispacth dan useSelector
-import { login } from '../redux/actions/auth'; //mengimport action login
-import { refreshToken } from '../redux/actions/refreshToken'; //mengimport action login
+import { login, refreshToken } from '../redux/actions/auth'; //mengimport action login
 
 const Login = () => {
   // mendeklarasikan hooks module untuk siap dipakai
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // mengimport beberapa state mengenai login dengan useSelector
-  const { loginResult } = useSelector((state) => state.auth);
-  const { accessToken } = useSelector((state) => state.refreshToken);
+  // mengimport state dari store mengenai login dengan useSelector
+  const { accessToken } = useSelector((state) => state.auth);
 
   // membuat beberapa state yang dibutuhkan oleh input
   const [email, setEmail] = useState('');
@@ -23,18 +21,13 @@ const Login = () => {
     dispatch(login({ email, password }));
   };
 
+  // Pada saat componentDidMount jalankan refreshToken supaya mengisi state di store apakah sudah login atau tidak
   useEffect(() => {
     dispatch(refreshToken());
   }, []);
 
   useEffect(() => {
-    // jika state loginSuccess bernilai true, ada nilainya atau loginnya berhasil maka redirect ke halaman home
-    if (loginResult) {
-      navigate('/');
-    }
-  }, [loginResult]);
-
-  useEffect(() => {
+    // jika sudah login maka redirect ke halaman home
     if (accessToken) {
       navigate('/');
     }

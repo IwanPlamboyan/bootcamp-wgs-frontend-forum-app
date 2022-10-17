@@ -2,9 +2,10 @@ import { combineReducers } from 'redux';
 
 // mengimport beberapa reducer
 import auth from './auth';
-import refreshToken from './refreshToken';
 import user from './user';
 import sidebar from './sidebar';
+import mainForum from './mainForum';
+import subForum from './subForum';
 
 // menggabungkan beberapa reducer
-export default combineReducers({ auth, refreshToken, user, sidebar });
+export default combineReducers({ auth, user, sidebar, mainForum, subForum });

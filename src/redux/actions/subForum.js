@@ -1,30 +1,149 @@
-import { REGISTER, LOGIN, LOGOUT, REFRESH_TOKEN, DELETE_REGISTER_RESULT } from './types';
-import axios from '../../api/axios';
-import jwt_decoded from 'jwt-decode';
+import { GET_ALL_SUBFORUM_BY_MAIN_ID, GET_SUBFORUM_BY_ID, GET_ALL_SUBFORUM_BY_USER_ID, ADD_SUBFORUM, DELETE_SUBFORUM } from './types';
+
+import axios, { axiosJWT } from '../../api/axios';
 import swal from 'sweetalert';
 
-// membuat action untuk register
-export const register = (data) => {
+export const getAllSubForumByMainId = (id) => {
   return (dispatch) => {
     // loading
     dispatch({
-      type: REGISTER,
+      type: GET_ALL_SUBFORUM_BY_MAIN_ID,
+      payload: true,
+      errorMessage: false,
+    });
+
+    // get API
+    axios({
+      method: 'get',
+      url: `/forum/tag/${id}`,
+      timeout: 120000,
+    })
+      .then((response) => {
+        // jika response berhasil
+        dispatch({
+          type: GET_ALL_SUBFORUM_BY_MAIN_ID,
+          payload: {
+            loading: false,
+            data: response.data,
+            errorMessage: false,
+          },
+        });
+      })
+      .catch((error) => {
+        // jika response error/gagal
+        dispatch({
+          type: GET_ALL_SUBFORUM_BY_MAIN_ID,
+          payload: {
+            loading: false,
+            data: false,
+            errorMessage: error.message,
+          },
+        });
+      });
+  };
+};
+
+export const getSubForumById = (id) => {
+  return (dispatch) => {
+    // loading
+    dispatch({
+      type: GET_SUBFORUM_BY_ID,
+      payload: true,
+      errorMessage: false,
+    });
+
+    // get API
+    axios({
+      method: 'get',
+      url: `/forum/sub/${id}`,
+      timeout: 120000,
+    })
+      .then((response) => {
+        // jika response berhasil
+        dispatch({
+          type: GET_SUBFORUM_BY_ID,
+          payload: {
+            loading: false,
+            data: response.data,
+            errorMessage: false,
+          },
+        });
+      })
+      .catch((error) => {
+        // jika response error/gagal
+        dispatch({
+          type: GET_SUBFORUM_BY_ID,
+          payload: {
+            loading: false,
+            data: false,
+            errorMessage: error.message,
+          },
+        });
+      });
+  };
+};
+
+export const getAllSubForumByUserId = (userId) => {
+  return (dispatch) => {
+    // loading
+    dispatch({
+      type: GET_ALL_SUBFORUM_BY_USER_ID,
+      payload: true,
+      errorMessage: false,
+    });
+
+    // get API
+    axios({
+      method: 'get',
+      url: `/forum/sub/user/${userId}`,
+      timeout: 120000,
+    })
+      .then((response) => {
+        // jika response berhasil
+        dispatch({
+          type: GET_ALL_SUBFORUM_BY_USER_ID,
+          payload: {
+            loading: false,
+            data: response.data,
+            errorMessage: false,
+          },
+        });
+      })
+      .catch((error) => {
+        // jika response error/gagal
+        dispatch({
+          type: GET_ALL_SUBFORUM_BY_USER_ID,
+          payload: {
+            loading: false,
+            data: false,
+            errorMessage: error.message,
+          },
+        });
+      });
+  };
+};
+
+export const addSubForum = (data) => {
+  return (dispatch) => {
+    // loading
+    dispatch({
+      type: ADD_SUBFORUM,
       payload: true,
       data: false,
       errorMessage: false,
     });
 
-    // post register API
-    axios({
+    // post token API
+    axiosJWT({
       method: 'post',
-      url: '/register',
+      url: '/forum/sub',
       timeout: 120000,
       data: data,
     })
       .then((response) => {
         // jika response berhasil
         dispatch({
-          type: REGISTER,
+          type: ADD_SUBFORUM,
           payload: {
             loading: false,
             data: response.data,
@@ -37,7 +156,7 @@ export const register = (data) => {
       .catch((error) => {
         // jika response error/gagal
         dispatch({
-          type: REGISTER,
+          type: ADD_SUBFORUM,
           payload: {
             loading: false,
             data: false,
@@ -50,154 +169,47 @@ export const register = (data) => {
   };
 };
 
-export const deleteRegisterResult = () => ({
-  type: DELETE_REGISTER_RESULT,
-});
-
-// membuat action untuk login
-export const login = (data) => {
+export const deleteSubForum = (id) => {
   return (dispatch) => {
     // loading
     dispatch({
-      type: LOGIN,
+      type: DELETE_SUBFORUM,
       payload: true,
-      data: false,
       errorMessage: false,
     });
 
-    // post login API
-    axios({
-      method: 'post',
-      url: '/login',
-      timeout: 120000,
-      data: data,
-    })
-      .then((response) => {
-        // jika response berhasil
-        const decoded = jwt_decoded(response.data.accessToken);
-        dispatch({
-          type: LOGIN,
-          payload: {
-            loading: false,
-            data: response.data,
-            errorMessage: false,
-            userId: decoded.userId,
-            username: decoded.username,
-            email: decoded.email,
-            image_url: decoded.image_url,
-          },
-        });
-        // memanggil pop-up sweetalert success
-        swal('Berhasil', 'Login berhasil', 'success');
-      })
-      .catch((error) => {
-        // jika response error/gagal
-        dispatch({
-          type: LOGIN,
-          payload: {
-            loading: false,
-            data: false,
-            errorMessage: error.message,
-            userId: false,
-            username: false,
-            email: false,
-            image_url: '',
-          },
-        });
-        // memanggil pop-up sweetalert error
-        swal('Gagal', error.response.data.msg, 'error');
-      });
-  };
-};
-
-// membuat action untuk logout
-export const logout = () => {
-  return (dispatch) => {
-    // loading
-    dispatch({
-      type: LOGOUT,
-      payload: true,
-      data: false,
-      errorMessage: false,
-    });
-
-    // post logout API
-    axios({
+    // delete token API
+    axiosJWT({
       method: 'delete',
-      url: '/logout',
+      url: `/forum/sub/${id}`,
       timeout: 120000,
     })
       .then((response) => {
         // jika response berhasil
         dispatch({
-          type: LOGOUT,
+          type: DELETE_SUBFORUM,
           payload: {
             loading: false,
             data: response.data,
             errorMessage: false,
           },
         });
-        window.location = '/';
+        swal('Thread berhasil di hapus!', {
+          icon: 'success',
+        });
       })
       .catch((error) => {
         // jika response error/gagal
         dispatch({
-          type: LOGOUT,
+          type: DELETE_SUBFORUM,
           payload: {
             loading: false,
             data: false,
             errorMessage: error.message,
           },
         });
-      });
-  };
-};
-
-export const refreshToken = () => {
-  return (dispatch) => {
-    // loading
-    dispatch({
-      type: REFRESH_TOKEN,
-      payload: true,
-      data: false,
-      errorMessage: false,
-    });
-
-    // get token API
-    axios({
-      method: 'get',
-      url: '/token',
-      timeout: 120000,
-    })
-      .then((response) => {
-        // jika response berhasil
-        const decoded = jwt_decoded(response.data.accessToken);
-        dispatch({
-          type: REFRESH_TOKEN,
-          payload: {
-            loading: false,
-            userId: decoded.userId,
-            username: decoded.username,
-            email: decoded.email,
-            image_url: decoded.image_url,
-            data: response.data,
-            errorMessage: false,
-          },
-        });
-      })
-      .catch((error) => {
-        // jika response error/gagal
-        dispatch({
-          type: REFRESH_TOKEN,
-          payload: {
-            loading: false,
-            data: false,
-            userId: false,
-            username: false,
-            email: false,
-            image_url: '',
-            errorMessage: error.message,
-          },
+        swal('Thread gagal di hapus!', {
+          icon: 'error',
         });
       });
   };

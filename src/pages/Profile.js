@@ -1,41 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import axios from '../api/axios';
 import Layout from './Layout';
 import CardThread from '../components/CardThread';
 import Modal from '../components/Modal';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserByUsername } from '../redux/actions/user';
+import { FaTrashAlt, FaUserEdit } from 'react-icons/fa';
+import { getAllSubForumByUserId, deleteSubForum } from '../redux/actions/subForum';
+import swal from 'sweetalert';
 
 const Profile = () => {
   const dispatch = useDispatch();
   const { getUserByUsernameResult, getUserByUsernameLoading, getUserByUsernameError } = useSelector((state) => state.user);
-  const userLogin = useSelector((state) => state.refreshToken);
+  const userLogin = useSelector((state) => state.auth);
+  const { getAllSubForumByUserIdResult, getAllSubForumByUserIdLoading, getAllSubForumByUserIdError, deleteSubForumResult } = useSelector((state) => state.subForum);
 
-  const [user, setUser] = useState([]);
-  const [userId, setUserId] = useState(0);
-  const [subForums, setSubForums] = useState([]);
-  const { username } = useParams();
   const [showModal, setShowModal] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
+  const { username } = useParams();
 
   const handleOnClose = () => setShowModal(false);
   const handleUpdated = () => setIsUpdated(!isUpdated);
 
   useEffect(() => {
     dispatch(getUserByUsername(username));
-  }, [dispatch, isUpdated]);
+  }, [dispatch, isUpdated, username]);
 
   useEffect(() => {
-    getUserByUsernameResult?.id !== undefined ? setUserId(getUserByUsernameResult?.id) : setUserId(0);
-    if (userId !== 0) {
-      getSubForumByUserId();
+    if (getUserByUsernameResult) {
+      dispatch(getAllSubForumByUserId(getUserByUsernameResult.id));
     }
-  }, [getUserByUsernameResult?.id, userId]);
+  }, [getUserByUsernameResult, deleteSubForumResult]);
 
-  const getSubForumByUserId = async () => {
-    const response = await axios.get(`/forum/sub/user/${userId}`);
-    setSubForums(response.data.result);
+  const handleDeleteSubForum = (id) => {
+    swal({
+      title: 'HAPUS',
+      text: 'Apakah anda yakin ingin menghapusnya?',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        dispatch(deleteSubForum(id));
+      }
+    });
   };
 
   return (
@@ -49,23 +57,11 @@ const Profile = () => {
                   <img src={getUserByUsernameResult.image_url} alt="Foto-profile" className="block w-full h-full" />
                 </div>
                 <div className="mt-3 text-center">
-                  <h1 className="text-2xl font-semibold">{getUserByUsernameResult.fullname}</h1>
                   <h2 className="text-xl font-normal">{getUserByUsernameResult.username}</h2>
+                  <h1 className="text-2xl font-semibold">{getUserByUsernameResult.fullname}</h1>
                   {getUserByUsernameResult.description && <p className="mt-2 text-left leading-5 text-sm">{getUserByUsernameResult.description}</p>}
                   <button className={`button w-full flex ${userLogin.username !== username ? 'hidden' : ''}`} onClick={() => setShowModal(true)}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                      <path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                      <path
-                        d="m19.21 15.74-3.54 3.54c-.14.14-.27.4-.3.59l-.19 1.35c-.07.49.27.83.76.76l1.35-.19c.19-.03.46-.16.59-.3l3.54-3.54c.61-.61.9-1.32 0-2.22-.89-.89-1.6-.6-2.21.01Z"
-                        stroke="white"
-                        strokeWidth="1.5"
-                        strokeMiterlimit="10"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      ></path>
-                      <path d="M18.7 16.25c.3 1.08 1.14 1.92 2.22 2.22" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                      <path d="M3.41 22c0-3.87 3.85-7 8.59-7 1.04 0 2.04.15 2.97.43" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                    </svg>
+                    <FaUserEdit className="w-5 h-5" />
                     Edit Profile
                   </button>
                 </div>
@@ -80,11 +76,24 @@ const Profile = () => {
             <div className="border bg-white text-center p-5 mb-2">
               <h3 className="text-xl font-medium">Thread</h3>
             </div>
-            {subForums.map((subForum) => (
-              <div key={subForum.id} className="inline-block w-full h-64 border p-3 rounded-md overflow-hidden bg-white">
-                <CardThread subForum={subForum} />
-              </div>
-            ))}
+            {getAllSubForumByUserIdResult ? (
+              getAllSubForumByUserIdResult.result.map((subForum) => (
+                <div key={subForum.id} className="group h-64 mb-1 border p-3 rounded-md overflow-hidden bg-white relative">
+                  <CardThread subForum={subForum} />
+                  {userLogin.username === username ? (
+                    <div className="absolute right-5 opacity-80 transition-opacity group-hover:opacity-100 bottom-3">
+                      <FaTrashAlt className="w-5 h-5 transition-colors text-gray-500 cursor-pointer hover:text-gray-900" onClick={() => handleDeleteSubForum(subForum.id)} />
+                    </div>
+                  ) : (
+                    ''
+                  )}
+                </div>
+              ))
+            ) : getAllSubForumByUserIdLoading ? (
+              <p>Loading...</p>
+            ) : (
+              <p>{getAllSubForumByUserIdError ? getAllSubForumByUserIdError : 'Data Kosong'}</p>
+            )}
           </div>
         </div>
       </div>

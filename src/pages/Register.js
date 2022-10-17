@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom'; // mengimport hooks useNavigate untuk redirect
 import { useDispatch, useSelector } from 'react-redux'; // mengimport hooks useDispacth dan useSelector
-import { register } from '../redux/actions/auth'; // mengimport action register
+import { register, deleteRegisterResult } from '../redux/actions/auth'; // mengimport action register
 // import swal from 'sweetalert';
 
 const Register = () => {
@@ -35,6 +35,7 @@ const Register = () => {
     // jika state registerResult bernilai true, ada nilainya atau registernya berhasil maka redirect ke halaman login
     if (registerResult) {
       navigate('/login');
+      dispatch(deleteRegisterResult());
     }
   }, [dispatch, registerResult]);
 

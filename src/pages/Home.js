@@ -35,7 +35,7 @@ const Home = () => {
       <InfiniteScroll dataLength={subForums.length} next={fetchMore} hasMore={hasMore} loader={<h4>Loading...</h4>}>
         <div className="container mx-auto py-6 px-2">
           {subForums.map((subForum) => (
-            <div key={subForum.id} className="inline-block m-1 w-[400px] h-64 border p-3 rounded-md overflow-hidden bg-white shadow-lg">
+            <div key={subForum.id} className="inline-block m-1 w-[400px] h-64 border p-3 rounded-md overflow-hidden bg-white shadow-lg relative">
               <CardThread subForum={subForum} />
             </div>
           ))}

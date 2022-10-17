@@ -1,20 +1,36 @@
 @tailwind base;
+
+@layer base {
+  h1 {
+    @apply text-[37px] font-bold;
+  }
+  h2 {
+    @apply text-[29px] font-bold;
+  }
+  h3 {
+    @apply text-[25.8px] font-bold;
+  }
+  h4 {
+    @apply text-[21px] font-bold;
+  }
+  h5 {
+    @apply text-[17.8px] font-bold;
+  }
+  h6 {
+    @apply text-[16.2px] font-bold;
+  }
+
+  ul {
+    @apply list-disc;
+  }
+
+  ol {
+    @apply list-decimal;
+  }
+}
+
 @tailwind components;
 @tailwind utilities;
-
-/*css3 design scrollbar*/
-/* ::-webkit-scrollbar {
-  width: 4px;
-}
-
-::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px bg-gray-900;
-  background: #666;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #232323;
-} */
 
 @layer components {
   .button-category {
@@ -26,6 +42,115 @@
   }
 
   .input-edit-profile {
-    @apply mt-1 mb-4 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-200 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500;
+    @apply mt-1 mb-4 block w-full px-1 py-1 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-200 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500;
   }
+
+  .item-link-sidebar {
+    @apply block p-2 rounded-md border hover:bg-blue-400 hover:text-white transition-colors;
+  }
+}
+
+/* Show Scroll */
+.show-scroll {
+  bottom: 1rem;
+}
+
+/* Scroll Bar */
+::-webkit-scrollbar {
+  width: 0.6rem;
+  background-color: hsl(250, 12%, 90%);
+  border-radius: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: hsl(250, 12%, 80%);
+  border-radius: 0.5rem;
+}
+
+/* Basic editor styles */
+.text-editor {
+  @apply rounded border border-[gray];
+}
+
+.menu-bar {
+  @apply pb-1 flex items-center justify-between gap-2;
+}
+
+.menu-bar button {
+  @apply text-lg py-[7px] px-[8px] m-1 outline-none border-none cursor-pointer bg-none;
+  color: rgb(70, 70, 70);
+}
+
+.button-1 {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+button.is-active {
+  background: rgb(197, 197, 197);
+  border-radius: 2px;
+}
+
+.ProseMirror {
+  @apply p-[10px] border-t border-[grey] bg-white min-h-[150px] outline-1 cursor-text;
+  border-radius: 0 0 5px 5px;
+}
+.ProseMirror > * + *,
+.thread-body > * + * {
+  @apply mt-[0.75em];
+}
+
+.ProseMirror ul,
+.ProseMirror ol,
+.thread-body ul,
+.thread-body ol {
+  @apply px-4;
+}
+
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3,
+.ProseMirror h4,
+.ProseMirror h5,
+.ProseMirror h6,
+.thread-body h1,
+.thread-body h2,
+.thread-body h3,
+.thread-body h4,
+.thread-body h5,
+.thread-body h6 {
+  line-height: 1.1;
+}
+
+.ProseMirror code,
+.thread-body code {
+  background-color: rgba(#616161, 0.1);
+  color: #616161;
+}
+
+.ProseMirror pre,
+.thread-body pre {
+  @apply bg-[#0d0d0d] text-white py-3 px-4 rounded-lg;
+  font-family: 'JetBrainsMono', monospace;
+}
+.ProseMirror pre code,
+.thread-body pre code {
+  @apply text-inherit p-0 bg-none text-[0.8rem];
+}
+
+.ProseMirror img,
+.thread-body img {
+  @apply max-w-full h-auto;
+}
+
+.ProseMirror blockquote,
+.thread-body blockquote {
+  @apply pl-4 border-l-2 border-[#9c9c9c];
+}
+
+.ProseMirror hr,
+.thread-body hr {
+  border: none;
+  border-top: 2px solid #9c9c9c;
+  margin: 2rem 0;
 }
