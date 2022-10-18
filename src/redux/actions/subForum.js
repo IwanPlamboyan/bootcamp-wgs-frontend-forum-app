@@ -1,4 +1,4 @@
-import { GET_ALL_SUBFORUM_BY_MAIN_ID, GET_SUBFORUM_BY_ID, GET_ALL_SUBFORUM_BY_USER_ID, ADD_SUBFORUM, DELETE_SUBFORUM } from './types';
+import { GET_ALL_SUBFORUM_BY_MAIN_ID, GET_SUBFORUM_BY_ID, GET_ALL_SUBFORUM_BY_USER_ID, ADD_SUBFORUM, DELETE_SUBFORUM, RESET_ADD_SUBFORUM } from './types';
 
 import axios, { axiosJWT } from '../../api/axios';
 import swal from 'sweetalert';
@@ -168,6 +168,10 @@ export const addSubForum = (data) => {
       });
   };
 };
+
+export const resetAddSubForum = () => ({
+  type: RESET_ADD_SUBFORUM,
+});
 
 export const deleteSubForum = (id) => {
   return (dispatch) => {

@@ -26,6 +26,7 @@ const Profile = () => {
     dispatch(getUserByUsername(username));
   }, [dispatch, isUpdated, username]);
 
+  // get semua subforum berdasarkan id user ketika state getUserByUsernameResult dan deleteSubForumResult berubah
   useEffect(() => {
     if (getUserByUsernameResult) {
       dispatch(getAllSubForumByUserId(getUserByUsernameResult.id));

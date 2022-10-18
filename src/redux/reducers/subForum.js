@@ -1,5 +1,5 @@
 // mengimport contansta atau varibel dengan key dan value yang sama di file types dalam folder actions
-import { GET_ALL_SUBFORUM_BY_MAIN_ID, GET_SUBFORUM_BY_ID, GET_ALL_SUBFORUM_BY_USER_ID, ADD_SUBFORUM, DELETE_SUBFORUM } from '../actions/types';
+import { GET_ALL_SUBFORUM_BY_MAIN_ID, GET_SUBFORUM_BY_ID, GET_ALL_SUBFORUM_BY_USER_ID, ADD_SUBFORUM, DELETE_SUBFORUM, RESET_ADD_SUBFORUM } from '../actions/types';
 
 const initialState = {
   getAllSubForumByMainIdResult: false,
@@ -52,6 +52,13 @@ const mainForum = (state = initialState, action) => {
         addSubForumResult: action.payload.data,
         addSubForumLoading: action.payload.loading,
         addSubForumError: action.payload.errorMessage,
+      };
+    case RESET_ADD_SUBFORUM:
+      return {
+        ...state,
+        addSubForumResult: false,
+        addSubForumLoading: false,
+        addSubForumError: false,
       };
     case DELETE_SUBFORUM:
       return {

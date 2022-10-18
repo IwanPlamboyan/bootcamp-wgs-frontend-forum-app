@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllMainForum } from '../redux/actions/mainForum';
 import { refreshToken } from '../redux/actions/auth';
 import { useNavigate } from 'react-router-dom';
-import { addSubForum } from '../redux/actions/subForum';
+import { addSubForum, resetAddSubForum } from '../redux/actions/subForum';
 
 const AddThread = () => {
   const dispatch = useDispatch();
@@ -56,6 +56,7 @@ const AddThread = () => {
       setPreview('');
       setBody('');
       navigate('/');
+      dispatch(resetAddSubForum());
     }
   }, [addSubForumResult]);
 

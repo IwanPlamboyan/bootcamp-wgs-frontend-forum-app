@@ -1,4 +1,4 @@
-import { EDIT_PROFILE, GET_USER_BY_USERNAME } from './types';
+import { EDIT_PROFILE, RESET_EDIT_PROFILE, GET_USER_BY_USERNAME } from './types';
 
 import axios, { axiosJWT } from '../../api/axios';
 
@@ -85,3 +85,8 @@ export const editProfile = (id, data) => {
       });
   };
 };
+
+// action untuk mereset state edit profile
+export const resetEditProfile = () => ({
+  type: RESET_EDIT_PROFILE,
+});

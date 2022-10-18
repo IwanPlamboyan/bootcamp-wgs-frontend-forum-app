@@ -1,4 +1,4 @@
-import { REGISTER, LOGIN, LOGOUT, REFRESH_TOKEN, DELETE_REGISTER_RESULT } from './types';
+import { REGISTER, LOGIN, LOGOUT, REFRESH_TOKEN, RESET_REGISTER } from './types';
 import axios from '../../api/axios';
 import jwt_decoded from 'jwt-decode';
 import swal from 'sweetalert';
@@ -50,8 +50,8 @@ export const register = (data) => {
   };
 };
 
-export const deleteRegisterResult = () => ({
-  type: DELETE_REGISTER_RESULT,
+export const resetRegister = () => ({
+  type: RESET_REGISTER,
 });
 
 // membuat action untuk login

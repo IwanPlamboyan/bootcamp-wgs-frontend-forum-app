@@ -1,5 +1,5 @@
 // mengimport contansta atau varibel dengan key dan value yang sama di file types dalam folder actions
-import { REGISTER, DELETE_REGISTER_RESULT, LOGIN, LOGOUT, REFRESH_TOKEN } from '../actions/types';
+import { REGISTER, RESET_REGISTER, LOGIN, LOGOUT, REFRESH_TOKEN } from '../actions/types';
 
 // state awal untuk authentication
 const initialState = {
@@ -34,10 +34,12 @@ const auth = (state = initialState, action) => {
         registerLoading: action.payload.loading,
         registerError: action.payload.errorMessage,
       };
-    case DELETE_REGISTER_RESULT:
+    case RESET_REGISTER:
       return {
         ...state,
         registerResult: false,
+        registerLoading: false,
+        registerError: false,
       };
     case LOGIN:
       return {

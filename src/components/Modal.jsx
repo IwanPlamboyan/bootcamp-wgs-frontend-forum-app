@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import swal from 'sweetalert';
 import { useSelector, useDispatch } from 'react-redux';
-import { editProfile } from '../redux/actions/user';
+import { editProfile, resetEditProfile } from '../redux/actions/user';
 import { FaUserEdit } from 'react-icons/fa';
+import { refreshToken } from '../redux/actions/auth';
 
 const Modal = ({ onClose, visible, isUpdated }) => {
   const dispatch = useDispatch();
@@ -26,12 +27,15 @@ const Modal = ({ onClose, visible, isUpdated }) => {
       onClose();
       swal('Berhasil', 'Data Profile berhasil di ubah', 'success');
       isUpdated();
+      dispatch(refreshToken());
+      dispatch(resetEditProfile());
     }
   }, [editProfileResult]);
 
   useEffect(() => {
     if (editProfileError) {
       swal('Berhasil', editProfileError, 'error');
+      dispatch(resetEditProfile());
     }
   }, [editProfileError]);
 

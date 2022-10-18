@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom'; // mengimport hooks useNavigate untuk redirect
 import { useDispatch, useSelector } from 'react-redux'; // mengimport hooks useDispacth dan useSelector
-import { register, deleteRegisterResult } from '../redux/actions/auth'; // mengimport action register
+import { register, resetRegister, refreshToken } from '../redux/actions/auth'; // mengimport action register
 // import swal from 'sweetalert';
 
 const Register = () => {
@@ -10,7 +10,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   // mengimport beberapa state mengenai register dengan useSelector
-  const { registerResult } = useSelector((state) => state.auth);
+  const { registerResult, accessToken } = useSelector((state) => state.auth);
 
   // membuat beberapa state yang dibutuhkan oleh input
   const [username, setUsername] = useState('');
@@ -31,11 +31,23 @@ const Register = () => {
     );
   };
 
+  // Pada saat componentDidMount jalankan refreshToken supaya mengisi state di store apakah sudah login atau tidak
+  useEffect(() => {
+    dispatch(refreshToken());
+  }, []);
+
+  useEffect(() => {
+    // jika sudah login maka redirect ke halaman home
+    if (accessToken) {
+      navigate('/');
+    }
+  }, [dispatch, accessToken]);
+
   useEffect(() => {
     // jika state registerResult bernilai true, ada nilainya atau registernya berhasil maka redirect ke halaman login
     if (registerResult) {
       navigate('/login');
-      dispatch(deleteRegisterResult());
+      dispatch(resetRegister());
     }
   }, [dispatch, registerResult]);
 

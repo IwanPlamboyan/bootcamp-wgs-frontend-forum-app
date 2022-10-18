@@ -7,6 +7,7 @@ import HeadThread from '../components/HeadThread';
 import { getSubForumById } from '../redux/actions/subForum';
 import parser from 'html-react-parser';
 import { VscChromeClose } from 'react-icons/vsc';
+import { BsFillReplyFill } from 'react-icons/bs';
 
 const DetailThread = () => {
   const dispatch = useDispatch();
@@ -51,6 +52,16 @@ const DetailThread = () => {
                 <div className="thread-body">{parser(getSubForumByIdResult.body)}</div>
               </div>
             </div>
+
+            <hr className="mt-5" />
+            {/* reply */}
+            <div>
+              <div className="mt-2 flex justify-end items-center gap-[2px]">
+                <BsFillReplyFill className="w-6 h-6" />
+                <span>Balas</span>
+              </div>
+            </div>
+            <></>
           </div>
         ) : getSubForumByIdLoading ? (
           <p>Loading...</p>

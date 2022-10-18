@@ -1,5 +1,5 @@
 // mengimport contansta atau varibel dengan key dan value yang sama di file types dalam folder actions
-import { GET_USER_BY_USERNAME, EDIT_PROFILE } from '../actions/types';
+import { GET_USER_BY_USERNAME, RESET_EDIT_PROFILE, EDIT_PROFILE } from '../actions/types';
 
 // state awal untuk data user yang login
 const initialState = {
@@ -28,6 +28,13 @@ const user = (state = initialState, action) => {
         editProfileResult: action.payload.data,
         editProfileLoading: action.payload.loading,
         editProfileError: action.payload.errorMessage,
+      };
+    case RESET_EDIT_PROFILE:
+      return {
+        ...state,
+        editProfileResult: false,
+        editProfileLoading: false,
+        editProfileError: false,
       };
     default:
       return state;
