@@ -1,13 +1,64 @@
-import { GET_ALL_SUBFORUM_BY_MAIN_ID, GET_SUBFORUM_BY_ID, GET_ALL_SUBFORUM_BY_USER_ID, ADD_SUBFORUM, DELETE_SUBFORUM, RESET_ADD_SUBFORUM } from './types';
+import { GET_ALL_POST_BY_CATEGORY_ID, GET_POST_BY_ID, GET_ALL_POST_BY_USER_ID, ADD_POST, DELETE_POST, RESET_ADD_POST } from './types';
 
 import axios, { axiosJWT } from '../../api/axios';
 import swal from 'sweetalert';
 
-export const getAllSubForumByMainId = (id) => {
+// export const getPost = (data) => {
+//   return (dispatch) => {
+//     // loading
+//     dispatch({
+//       type: GET_POST,
+//       posts: false,
+//       tempId: false,
+//       hasMore: false,
+//       payload: true,
+//       data: false,
+//       errorMessage: false,
+//     });
+
+//     // post token API
+//     axios({
+//       method: 'get',
+//       url: `/forum/post?search_query=${data.keyword}&lastId=${data.lastId}&limit=${data.limit}`,
+//       timeout: 120000,
+//       data: data,
+//     })
+//       .then((response) => {
+//         // jika response berhasil
+//         dispatch({
+//           type: GET_POST,
+//           payload: {
+//             posts: response.data.result,
+//             tempId: response.data.lastId,
+//             hasMore: response.data.hasMore,
+//             loading: false,
+//             data: response.data,
+//             errorMessage: false,
+//           },
+//         });
+//       })
+//       .catch((error) => {
+//         // jika response error/gagal
+//         dispatch({
+//           type: GET_POST,
+//           payload: {
+//             posts: false,
+//             tempId: false,
+//             hasMore: false,
+//             loading: false,
+//             data: false,
+//             errorMessage: error.message,
+//           },
+//         });
+//       });
+//   };
+// };
+
+export const getAllPostByCategoryId = (id) => {
   return (dispatch) => {
     // loading
     dispatch({
-      type: GET_ALL_SUBFORUM_BY_MAIN_ID,
+      type: GET_ALL_POST_BY_CATEGORY_ID,
       payload: true,
       errorMessage: false,
     });
@@ -15,13 +66,13 @@ export const getAllSubForumByMainId = (id) => {
     // get API
     axios({
       method: 'get',
-      url: `/forum/tag/${id}`,
+      url: `/forum/category/${id}`,
       timeout: 120000,
     })
       .then((response) => {
         // jika response berhasil
         dispatch({
-          type: GET_ALL_SUBFORUM_BY_MAIN_ID,
+          type: GET_ALL_POST_BY_CATEGORY_ID,
           payload: {
             loading: false,
             data: response.data,
@@ -32,7 +83,7 @@ export const getAllSubForumByMainId = (id) => {
       .catch((error) => {
         // jika response error/gagal
         dispatch({
-          type: GET_ALL_SUBFORUM_BY_MAIN_ID,
+          type: GET_ALL_POST_BY_CATEGORY_ID,
           payload: {
             loading: false,
             data: false,
@@ -43,11 +94,11 @@ export const getAllSubForumByMainId = (id) => {
   };
 };
 
-export const getSubForumById = (id) => {
+export const getPostById = (id) => {
   return (dispatch) => {
     // loading
     dispatch({
-      type: GET_SUBFORUM_BY_ID,
+      type: GET_POST_BY_ID,
       payload: true,
       errorMessage: false,
     });
@@ -55,13 +106,13 @@ export const getSubForumById = (id) => {
     // get API
     axios({
       method: 'get',
-      url: `/forum/sub/${id}`,
+      url: `/forum/post/${id}`,
       timeout: 120000,
     })
       .then((response) => {
         // jika response berhasil
         dispatch({
-          type: GET_SUBFORUM_BY_ID,
+          type: GET_POST_BY_ID,
           payload: {
             loading: false,
             data: response.data,
@@ -72,7 +123,7 @@ export const getSubForumById = (id) => {
       .catch((error) => {
         // jika response error/gagal
         dispatch({
-          type: GET_SUBFORUM_BY_ID,
+          type: GET_POST_BY_ID,
           payload: {
             loading: false,
             data: false,
@@ -83,11 +134,11 @@ export const getSubForumById = (id) => {
   };
 };
 
-export const getAllSubForumByUserId = (userId) => {
+export const getAllPostByUserId = (userId) => {
   return (dispatch) => {
     // loading
     dispatch({
-      type: GET_ALL_SUBFORUM_BY_USER_ID,
+      type: GET_ALL_POST_BY_USER_ID,
       payload: true,
       errorMessage: false,
     });
@@ -95,13 +146,13 @@ export const getAllSubForumByUserId = (userId) => {
     // get API
     axios({
       method: 'get',
-      url: `/forum/sub/user/${userId}`,
+      url: `/forum/post/user/${userId}`,
       timeout: 120000,
     })
       .then((response) => {
         // jika response berhasil
         dispatch({
-          type: GET_ALL_SUBFORUM_BY_USER_ID,
+          type: GET_ALL_POST_BY_USER_ID,
           payload: {
             loading: false,
             data: response.data,
@@ -112,7 +163,7 @@ export const getAllSubForumByUserId = (userId) => {
       .catch((error) => {
         // jika response error/gagal
         dispatch({
-          type: GET_ALL_SUBFORUM_BY_USER_ID,
+          type: GET_ALL_POST_BY_USER_ID,
           payload: {
             loading: false,
             data: false,
@@ -123,11 +174,11 @@ export const getAllSubForumByUserId = (userId) => {
   };
 };
 
-export const addSubForum = (data) => {
+export const addPost = (data) => {
   return (dispatch) => {
     // loading
     dispatch({
-      type: ADD_SUBFORUM,
+      type: ADD_POST,
       payload: true,
       data: false,
       errorMessage: false,
@@ -136,14 +187,14 @@ export const addSubForum = (data) => {
     // post token API
     axiosJWT({
       method: 'post',
-      url: '/forum/sub',
+      url: '/forum/post',
       timeout: 120000,
       data: data,
     })
       .then((response) => {
         // jika response berhasil
         dispatch({
-          type: ADD_SUBFORUM,
+          type: ADD_POST,
           payload: {
             loading: false,
             data: response.data,
@@ -156,7 +207,7 @@ export const addSubForum = (data) => {
       .catch((error) => {
         // jika response error/gagal
         dispatch({
-          type: ADD_SUBFORUM,
+          type: ADD_POST,
           payload: {
             loading: false,
             data: false,
@@ -169,15 +220,15 @@ export const addSubForum = (data) => {
   };
 };
 
-export const resetAddSubForum = () => ({
-  type: RESET_ADD_SUBFORUM,
+export const resetAddPost = () => ({
+  type: RESET_ADD_POST,
 });
 
-export const deleteSubForum = (id) => {
+export const deletePost = (id) => {
   return (dispatch) => {
     // loading
     dispatch({
-      type: DELETE_SUBFORUM,
+      type: DELETE_POST,
       payload: true,
       errorMessage: false,
     });
@@ -185,13 +236,13 @@ export const deleteSubForum = (id) => {
     // delete token API
     axiosJWT({
       method: 'delete',
-      url: `/forum/sub/${id}`,
+      url: `/forum/post/${id}`,
       timeout: 120000,
     })
       .then((response) => {
         // jika response berhasil
         dispatch({
-          type: DELETE_SUBFORUM,
+          type: DELETE_POST,
           payload: {
             loading: false,
             data: response.data,
@@ -205,7 +256,7 @@ export const deleteSubForum = (id) => {
       .catch((error) => {
         // jika response error/gagal
         dispatch({
-          type: DELETE_SUBFORUM,
+          type: DELETE_POST,
           payload: {
             loading: false,
             data: false,

@@ -4,8 +4,8 @@ import { combineReducers } from 'redux';
 import auth from './auth';
 import user from './user';
 import sidebar from './sidebar';
-import mainForum from './mainForum';
-import subForum from './subForum';
+import category from './category';
+import post from './post';
 
 // menggabungkan beberapa reducer
-export default combineReducers({ auth, user, sidebar, mainForum, subForum });
+export default combineReducers({ auth, user, sidebar, category, post });

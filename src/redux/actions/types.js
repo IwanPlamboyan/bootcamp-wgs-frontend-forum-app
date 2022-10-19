@@ -3,8 +3,6 @@ export const REGISTER = 'REGISTER';
 export const RESET_REGISTER = 'RESET_REGISTER';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
-
-// type untuk refresh token
 export const REFRESH_TOKEN = 'REFRESH_TOKEN';
 
 // user type
@@ -15,15 +13,16 @@ export const RESET_EDIT_PROFILE = 'RESET_EDIT_PROFILE';
 // type untuk toggle sidebar
 export const SIDEBAR_TOGGLE = 'SIDEBAR_TOGGLE';
 
-// main forum type
-export const GET_MAIN_FORUM = 'GET_MAIN_FORUM';
-export const GET_ALL_MAIN_FORUM = 'GET_ALL_MAIN_FORUM';
-export const GET_MAIN_FORUM_BY_ID = 'GET_MAIN_FORUM_BY_ID';
+// category type
+export const GET_CATEGORY = 'GET_CATEGORY';
+export const GET_ALL_CATEGORY = 'GET_ALL_CATEGORY';
+export const GET_CATEGORY_BY_ID = 'GET_CATEGORY_BY_ID';
 
-// sub forum type
-export const GET_ALL_SUBFORUM_BY_MAIN_ID = 'GET_ALL_SUBFORUM_BY_MAIN_ID';
-export const GET_SUBFORUM_BY_ID = 'GET_SUBFORUM_BY_ID';
-export const GET_ALL_SUBFORUM_BY_USER_ID = 'GET_ALL_SUBFORUM_BY_USER_ID';
-export const ADD_SUBFORUM = 'ADD_SUBFORUM';
-export const DELETE_SUBFORUM = 'DELETE_SUBFORUM';
-export const RESET_ADD_SUBFORUM = 'RESET_ADD_SUBFORUM_RESULT';
+// post type
+export const GET_POST = 'GET_POST';
+export const GET_ALL_POST_BY_CATEGORY_ID = 'GET_ALL_POST_BY_CATEGORY_ID';
+export const GET_POST_BY_ID = 'GET_POST_BY_ID';
+export const GET_ALL_POST_BY_USER_ID = 'GET_ALL_POST_BY_USER_ID';
+export const ADD_POST = 'ADD_POST';
+export const DELETE_POST = 'DELETE_POST';
+export const RESET_ADD_POST = 'RESET_ADD_POST_RESULT';

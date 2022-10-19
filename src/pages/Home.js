@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Layout from './Layout';
 import TagSidebar from '../components/TagSidebar';
-import CardThread from '../components/CardThread';
+import CardPost from '../components/CardPost';
 import axios from '../api/axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 const Home = () => {
-  const [subForums, setSubForums] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [lastId, setLastId] = useState(0);
   const [tempId, setTempId] = useState(0);
   const [limit, setLimit] = useState(20);
@@ -14,13 +14,13 @@ const Home = () => {
   const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
-    getSubForum();
+    getPost();
   }, [lastId, keyword]);
 
-  const getSubForum = async () => {
-    const response = await axios.get(`/forum/sub?search_query=${keyword}&lastId=${lastId}&limit=${limit}`);
-    const newSubForums = response.data.result;
-    setSubForums([...subForums, ...newSubForums]);
+  const getPost = async () => {
+    const response = await axios.get(`/forum/post?search_query=${keyword}&lastId=${lastId}&limit=${limit}`);
+    const newPosts = response.data.result;
+    setPosts([...posts, ...newPosts]);
     setTempId(response.data.lastId);
     setHasMore(response.data.hasMore);
   };
@@ -32,11 +32,11 @@ const Home = () => {
   return (
     <Layout>
       <TagSidebar />
-      <InfiniteScroll dataLength={subForums.length} next={fetchMore} hasMore={hasMore} loader={<h4>Loading...</h4>}>
+      <InfiniteScroll dataLength={posts.length} next={fetchMore} hasMore={hasMore} loader={<h4>Loading...</h4>}>
         <div className="container mx-auto py-6 px-2">
-          {subForums.map((subForum) => (
-            <div key={subForum.id} className="inline-block m-1 w-[400px] h-64 border p-3 rounded-md overflow-hidden bg-white shadow-lg relative">
-              <CardThread subForum={subForum} />
+          {posts.map((post) => (
+            <div key={post.id} className="inline-block m-1 w-[400px] h-64 border p-3 rounded-md overflow-hidden bg-white shadow-lg relative">
+              <CardPost post={post} />
             </div>
           ))}
         </div>

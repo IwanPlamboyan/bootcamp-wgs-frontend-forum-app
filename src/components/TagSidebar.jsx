@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMainForum } from '../redux/actions/mainForum';
+import { getCategory } from '../redux/actions/category';
 
 const TagSidebar = () => {
   const dispatch = useDispatch();
-  const { getMainForumResult, getMainForumLoading, getMainForumError } = useSelector((state) => state.mainForum);
+  const { getCategoryResult, getCategoryLoading, getCategoryError } = useSelector((state) => state.category);
   const limit = 10;
 
   useEffect(() => {
-    dispatch(getMainForum(limit));
+    dispatch(getCategory(limit));
   }, [limit]);
 
   return (
@@ -19,16 +19,16 @@ const TagSidebar = () => {
           <NavLink to="/tag">Category</NavLink> Terbaru :
         </h6>
         <div className="flex flex-wrap mt-4 gap-2 pb-5">
-          {getMainForumResult ? (
-            getMainForumResult.result.map((mainForum) => (
-              <NavLink to={`/tag/${mainForum.id}`} key={mainForum.id}>
-                <p className="px-3 button-category rounded-xl">#{mainForum.title}</p>
+          {getCategoryResult ? (
+            getCategoryResult.result.map((category) => (
+              <NavLink to={`/tag/${category.id}`} key={category.id}>
+                <p className="px-3 text-sm button-category rounded-xl">#{category.title}</p>
               </NavLink>
             ))
-          ) : getMainForumLoading ? (
+          ) : getCategoryLoading ? (
             <p>Loading...</p>
           ) : (
-            <p>{getMainForumError ? getMainForumError : 'Belum ada category'}</p>
+            <p>{getCategoryError ? getCategoryError : 'Belum ada category'}</p>
           )}
           <NavLink to={`/tag`}>
             <p className="bg-gray-200 text-gray-600 hover:text-gray-800 px-2 py-1 text-sm inline-block rounded-full">+</p>

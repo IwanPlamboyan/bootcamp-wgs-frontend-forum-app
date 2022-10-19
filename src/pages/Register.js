@@ -27,6 +27,7 @@ const Register = () => {
         email,
         password,
         confirmPassword,
+        roles: 'user',
       })
     );
   };

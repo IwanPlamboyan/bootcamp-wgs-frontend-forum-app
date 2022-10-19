@@ -1,12 +1,12 @@
-import { GET_MAIN_FORUM, GET_ALL_MAIN_FORUM, GET_MAIN_FORUM_BY_ID } from './types';
+import { GET_CATEGORY, GET_ALL_CATEGORY, GET_CATEGORY_BY_ID } from './types';
 
 import axios from '../../api/axios';
 
-export const getMainForum = (limit) => {
+export const getCategory = (limit) => {
   return (dispatch) => {
     // loading
     dispatch({
-      type: GET_MAIN_FORUM,
+      type: GET_CATEGORY,
       payload: true,
       errorMessage: false,
     });
@@ -14,13 +14,13 @@ export const getMainForum = (limit) => {
     // get token API
     axios({
       method: 'get',
-      url: `/forum/main?limit=${limit}`,
+      url: `/forum/category?limit=${limit}`,
       timeout: 120000,
     })
       .then((response) => {
         // jika response berhasil
         dispatch({
-          type: GET_MAIN_FORUM,
+          type: GET_CATEGORY,
           payload: {
             loading: false,
             data: response.data,
@@ -31,7 +31,7 @@ export const getMainForum = (limit) => {
       .catch((error) => {
         // jika response error/gagal
         dispatch({
-          type: GET_MAIN_FORUM,
+          type: GET_CATEGORY,
           payload: {
             loading: false,
             data: false,
@@ -42,11 +42,11 @@ export const getMainForum = (limit) => {
   };
 };
 
-export const getAllMainForum = () => {
+export const getAllCategory = () => {
   return (dispatch) => {
     // loading
     dispatch({
-      type: GET_ALL_MAIN_FORUM,
+      type: GET_ALL_CATEGORY,
       payload: true,
       errorMessage: false,
     });
@@ -54,13 +54,13 @@ export const getAllMainForum = () => {
     // get token API
     axios({
       method: 'get',
-      url: `/forum/mainAll`,
+      url: `/forum/categoryAll`,
       timeout: 120000,
     })
       .then((response) => {
         // jika response berhasil
         dispatch({
-          type: GET_ALL_MAIN_FORUM,
+          type: GET_ALL_CATEGORY,
           payload: {
             loading: false,
             data: response.data,
@@ -71,7 +71,7 @@ export const getAllMainForum = () => {
       .catch((error) => {
         // jika response error/gagal
         dispatch({
-          type: GET_ALL_MAIN_FORUM,
+          type: GET_ALL_CATEGORY,
           payload: {
             loading: false,
             data: false,
@@ -82,11 +82,11 @@ export const getAllMainForum = () => {
   };
 };
 
-export const getMainForumById = (id) => {
+export const getCategoryById = (id) => {
   return (dispatch) => {
     // loading
     dispatch({
-      type: GET_MAIN_FORUM_BY_ID,
+      type: GET_CATEGORY_BY_ID,
       payload: true,
       errorMessage: false,
     });
@@ -94,13 +94,13 @@ export const getMainForumById = (id) => {
     // get token API
     axios({
       method: 'get',
-      url: `/forum/main/${id}`,
+      url: `/forum/category/${id}`,
       timeout: 120000,
     })
       .then((response) => {
         // jika response berhasil
         dispatch({
-          type: GET_MAIN_FORUM_BY_ID,
+          type: GET_CATEGORY_BY_ID,
           payload: {
             loading: false,
             data: response.data,
@@ -111,7 +111,7 @@ export const getMainForumById = (id) => {
       .catch((error) => {
         // jika response error/gagal
         dispatch({
-          type: GET_MAIN_FORUM_BY_ID,
+          type: GET_CATEGORY_BY_ID,
           payload: {
             loading: false,
             data: false,

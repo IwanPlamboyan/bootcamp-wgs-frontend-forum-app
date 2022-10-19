@@ -4,18 +4,18 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 // import Discussion from './pages/Discussion';
 import Home from './pages/Home';
-import DetailThread from './pages/DetailThread';
+import DetailPost from './pages/DetailPost';
 import Tag from './pages/Tag';
 import Profile from './pages/Profile';
-import AddThread from './pages/AddThread';
+import CreatePost from './pages/CreatePost';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/sub/add" element={<AddThread />} />
-        <Route path="/sub/:id" element={<DetailThread />} />
+        <Route path="/post/add" element={<CreatePost />} />
+        <Route path="/post/:id" element={<DetailPost />} />
         <Route path="/tag/:id" element={<Tag />} />
         <Route path="/user/profile/:username" element={<Profile />} />
         <Route path="/login" element={<Login />} />

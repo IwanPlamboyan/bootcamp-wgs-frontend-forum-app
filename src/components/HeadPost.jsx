@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
-const HeadThread = ({ user, date }) => {
+const HeadPost = ({ user, date }) => {
   return (
     <div className="flex gap-3 items-center mb-4">
       <NavLink to={`/user/profile/${user.username}`} className="w-12 h-12 border rounded-full overflow-hidden">
@@ -17,4 +17,4 @@ const HeadThread = ({ user, date }) => {
   );
 };
 
-export default HeadThread;
+export default HeadPost;

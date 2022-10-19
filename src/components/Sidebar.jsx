@@ -33,7 +33,7 @@ const Sidebar = () => {
           </NavLink>
         </div>
         <div>
-          <NavLink to="/sub/add" className={`item-link-sidebar ${url === 'sub/add' ? 'bg-blue-500 text-white' : ''}`}>
+          <NavLink to="/post/add" className={`item-link-sidebar ${url === 'post/add' ? 'bg-blue-500 text-white' : ''}`}>
             <MdEditNote className="w-6 h-6" />
           </NavLink>
         </div>

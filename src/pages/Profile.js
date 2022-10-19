@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import Layout from './Layout';
-import CardThread from '../components/CardThread';
+import CardPost from '../components/CardPost';
 import Modal from '../components/Modal';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserByUsername } from '../redux/actions/user';
 import { FaTrashAlt, FaUserEdit } from 'react-icons/fa';
-import { getAllSubForumByUserId, deleteSubForum } from '../redux/actions/subForum';
+import { getAllPostByUserId, deletePost } from '../redux/actions/post';
 import swal from 'sweetalert';
 
 const Profile = () => {
   const dispatch = useDispatch();
   const { getUserByUsernameResult, getUserByUsernameLoading, getUserByUsernameError } = useSelector((state) => state.user);
   const userLogin = useSelector((state) => state.auth);
-  const { getAllSubForumByUserIdResult, getAllSubForumByUserIdLoading, getAllSubForumByUserIdError, deleteSubForumResult } = useSelector((state) => state.subForum);
+  const { getAllPostByUserIdResult, getAllPostByUserIdLoading, getAllPostByUserIdError, deletePostResult } = useSelector((state) => state.post);
 
   const [showModal, setShowModal] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
@@ -26,14 +26,14 @@ const Profile = () => {
     dispatch(getUserByUsername(username));
   }, [dispatch, isUpdated, username]);
 
-  // get semua subforum berdasarkan id user ketika state getUserByUsernameResult dan deleteSubForumResult berubah
+  // get semua postingan berdasarkan id user ketika state getUserByUsernameResult dan deleteSubForumResult berubah
   useEffect(() => {
     if (getUserByUsernameResult) {
-      dispatch(getAllSubForumByUserId(getUserByUsernameResult.id));
+      dispatch(getAllPostByUserId(getUserByUsernameResult.id));
     }
-  }, [getUserByUsernameResult, deleteSubForumResult]);
+  }, [getUserByUsernameResult, deletePostResult]);
 
-  const handleDeleteSubForum = (id) => {
+  const handleDeletePost = (id) => {
     swal({
       title: 'HAPUS',
       text: 'Apakah anda yakin ingin menghapusnya?',
@@ -42,7 +42,7 @@ const Profile = () => {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        dispatch(deleteSubForum(id));
+        dispatch(deletePost(id));
       }
     });
   };
@@ -77,23 +77,23 @@ const Profile = () => {
             <div className="border bg-white text-center p-5 mb-2">
               <h3 className="text-xl font-medium">Thread</h3>
             </div>
-            {getAllSubForumByUserIdResult ? (
-              getAllSubForumByUserIdResult.result.map((subForum) => (
-                <div key={subForum.id} className="group h-64 mb-1 border p-3 rounded-md overflow-hidden bg-white relative">
-                  <CardThread subForum={subForum} />
+            {getAllPostByUserIdResult ? (
+              getAllPostByUserIdResult.result.map((post) => (
+                <div key={post.id} className="group h-64 mb-1 border p-3 rounded-md overflow-hidden bg-white relative">
+                  <CardPost post={post} />
                   {userLogin.username === username ? (
                     <div className="absolute right-5 opacity-80 transition-opacity group-hover:opacity-100 bottom-3">
-                      <FaTrashAlt className="w-5 h-5 transition-colors text-gray-500 cursor-pointer hover:text-gray-900" onClick={() => handleDeleteSubForum(subForum.id)} />
+                      <FaTrashAlt className="w-5 h-5 transition-colors text-gray-500 cursor-pointer hover:text-gray-900" onClick={() => handleDeletePost(post.id)} />
                     </div>
                   ) : (
                     ''
                   )}
                 </div>
               ))
-            ) : getAllSubForumByUserIdLoading ? (
+            ) : getAllPostByUserIdLoading ? (
               <p>Loading...</p>
             ) : (
-              <p>{getAllSubForumByUserIdError ? getAllSubForumByUserIdError : 'Data Kosong'}</p>
+              <p>{getAllPostByUserIdError}</p>
             )}
           </div>
         </div>

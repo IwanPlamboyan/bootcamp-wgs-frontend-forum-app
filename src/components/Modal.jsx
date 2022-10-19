@@ -13,12 +13,12 @@ const Modal = ({ onClose, visible, isUpdated }) => {
   const [fullName, setFullName] = useState('');
   const [fotoProfile, setFotoProfile] = useState('');
   const [preview, setPreview] = useState('');
-  const [description, setDescription] = useState();
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
     setId(getUserByUsernameResult?.id);
-    setFullName(getUserByUsernameResult?.fullname);
-    setDescription(getUserByUsernameResult?.description);
+    setFullName(getUserByUsernameResult?.fullname ? getUserByUsernameResult.fullname : '');
+    setDescription(getUserByUsernameResult?.description ? getUserByUsernameResult.description : '');
     setPreview(getUserByUsernameResult?.image_url);
   }, [getUserByUsernameResult]);
 
