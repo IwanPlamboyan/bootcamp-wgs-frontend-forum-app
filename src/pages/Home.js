@@ -34,11 +34,17 @@ const Home = () => {
       <TagSidebar />
       <InfiniteScroll dataLength={posts.length} next={fetchMore} hasMore={hasMore} loader={<h4>Loading...</h4>}>
         <div className="container mx-auto py-6 px-2">
-          {posts.map((post) => (
-            <div key={post.id} className="inline-block m-1 w-[400px] h-64 border p-3 rounded-md overflow-hidden bg-white shadow-lg relative">
-              <CardPost post={post} />
+          {posts.length > 0 ? (
+            posts.map((post) => (
+              <div key={post.id} className="inline-block m-1 w-[400px] h-64 border p-3 rounded-md overflow-hidden bg-white shadow-lg relative">
+                <CardPost post={post} />
+              </div>
+            ))
+          ) : (
+            <div className="bg-white p-3">
+              <p>Maaf Data masih kosong</p>
             </div>
-          ))}
+          )}
         </div>
       </InfiniteScroll>
     </Layout>

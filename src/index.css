@@ -48,6 +48,14 @@
   .item-link-sidebar {
     @apply block p-2 rounded-md border hover:bg-blue-400 hover:text-white transition-colors;
   }
+
+  .link-categories {
+    @apply transition-all border flex justify-between items-center w-full bg-white pl-2 sm:pl-10 pr-2 sm:pr-6 py-2.5 hover:shadow hover:shadow-blue-200 relative before:content-[''] before:absolute before:transition-all before:duration-[800ms] before:left-0 before:bottom-0 before:w-0 before:h-0 before:border-b-2 before:border-l-2 before:border-transparent hover:before:border-blue-400 hover:before:w-[52px] hover:before:h-full after:content-[''] after:absolute after:transition-all after:duration-[800ms] after:right-0 after:top-0 after:w-0 after:h-0 after:border-t-2 after:border-r-2 after:border-transparent hover:after:border-blue-400 hover:after:w-[52px] hover:after:h-full;
+  }
+
+  .button-action-category {
+    @apply transition-colors flex gap-1 items-center py-2 px-1 rounded-full text-gray-100;
+  }
 }
 
 /* Show Scroll */
@@ -92,7 +100,7 @@ button.is-active {
 }
 
 .ProseMirror {
-  @apply p-[10px] border-t border-[grey] bg-white min-h-[150px] outline-1 cursor-text;
+  @apply p-[10px] border-t border-[grey] bg-white min-h-[150px] outline-none focus:shadow-lg cursor-text;
   border-radius: 0 0 5px 5px;
 }
 .ProseMirror > * + *,

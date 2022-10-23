@@ -30,24 +30,6 @@ const MenuBar = ({ editor }) => {
         <button onClick={() => editor.chain().focus().toggleCode().run()} className={editor.isActive('code') ? 'is-active' : ''}>
           <FaCode />
         </button>
-        <button onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}>
-          <p className="text-base leading-5">h1</p>
-        </button>
-        <button onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}>
-          <p className="text-base leading-5">h2</p>
-        </button>
-        <button onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} className={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}>
-          <p className="text-base leading-5">h3</p>
-        </button>
-        <button onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()} className={editor.isActive('heading', { level: 4 }) ? 'is-active' : ''}>
-          <p className="text-base leading-5">h4</p>
-        </button>
-        <button onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()} className={editor.isActive('heading', { level: 5 }) ? 'is-active' : ''}>
-          <p className="text-base leading-5">h5</p>
-        </button>
-        <button onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()} className={editor.isActive('heading', { level: 6 }) ? 'is-active' : ''}>
-          <p className="text-base leading-5">h6</p>
-        </button>
         <button onClick={() => editor.chain().focus().toggleBulletList().run()} className={editor.isActive('bulletList') ? 'is-active' : ''}>
           <FaListUl />
         </button>
@@ -76,15 +58,20 @@ const MenuBar = ({ editor }) => {
   );
 };
 
-const TipTap = ({ setValue }) => {
+const TipTap = ({ setValue, autofocus, clear }) => {
   const editor = useEditor({
     extensions: [StarterKit, Underline],
     content: ``,
+    autofocus: autofocus,
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
       setValue(html);
     },
   });
+
+  if (clear) {
+    editor.commands.clearContent();
+  }
 
   return (
     <div className="text-editor">

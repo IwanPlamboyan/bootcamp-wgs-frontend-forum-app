@@ -79,6 +79,7 @@ const CreatePost = () => {
                     placeholder="Isi judul Thread"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    autoFocus={true}
                     required
                   />
                 </label>
@@ -126,7 +127,7 @@ const CreatePost = () => {
               <label>
                 <span className="block text-base font-medium text-slate-700 mb-1 mt-2 cursor-pointer">Deskripsi</span>
                 <div className="border rounded-sm">
-                  <TipTap setValue={setBody} />
+                  <TipTap setValue={setBody} autofocus={false} />
                 </div>
               </label>
             </div>

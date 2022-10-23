@@ -60,6 +60,7 @@ const Profile = () => {
                 <div className="mt-3 text-center">
                   <h2 className="text-xl font-normal">{getUserByUsernameResult.username}</h2>
                   <h1 className="text-2xl font-semibold">{getUserByUsernameResult.fullname}</h1>
+                  <p className="text-sm italic">{getUserByUsernameResult.roles}</p>
                   {getUserByUsernameResult.description && <p className="mt-2 text-left leading-5 text-sm">{getUserByUsernameResult.description}</p>}
                   <button className={`button w-full flex ${userLogin.username !== username ? 'hidden' : ''}`} onClick={() => setShowModal(true)}>
                     <FaUserEdit className="w-5 h-5" />
@@ -75,21 +76,28 @@ const Profile = () => {
           </div>
           <div className="w-full overflow-hidden z-10">
             <div className="border bg-white text-center p-5 mb-2">
-              <h3 className="text-xl font-medium">Thread</h3>
+              <h3 className="text-2xl font-semibold">Thread</h3>
             </div>
             {getAllPostByUserIdResult ? (
-              getAllPostByUserIdResult.result.map((post) => (
-                <div key={post.id} className="group h-64 mb-1 border p-3 rounded-md overflow-hidden bg-white relative">
-                  <CardPost post={post} />
-                  {userLogin.username === username ? (
-                    <div className="absolute right-5 opacity-80 transition-opacity group-hover:opacity-100 bottom-3">
-                      <FaTrashAlt className="w-5 h-5 transition-colors text-gray-500 cursor-pointer hover:text-gray-900" onClick={() => handleDeletePost(post.id)} />
+              <>
+                {getAllPostByUserIdResult.result.length > 0 ? (
+                  getAllPostByUserIdResult.result.map((post) => (
+                    <div key={post.id} className="group h-64 mb-1 border p-3 rounded-md overflow-hidden bg-white relative">
+                      <CardPost post={post} />
+                      {userLogin.username === username && (
+                        <div className="absolute right-5 opacity-80 transition-opacity group-hover:opacity-100 bottom-3">
+                          <FaTrashAlt className="w-5 h-5 transition-colors text-gray-500 cursor-pointer hover:text-gray-900" onClick={() => handleDeletePost(post.id)} />
+                        </div>
+                      )}
                     </div>
-                  ) : (
-                    ''
-                  )}
-                </div>
-              ))
+                  ))
+                ) : (
+                  <div className="bg-white p-3 text-center">
+                    <p className="font-medium text-lg mb-1">Kosong nih Gan</p>
+                    <p className="text-sm text-gray-900">Daripada diem-diem bae, mending berkarya di sini. Tuang inspirasimu disini Semuanya boleh Gan. Yang penting... Tunjukkin Aslinya!</p>
+                  </div>
+                )}
+              </>
             ) : getAllPostByUserIdLoading ? (
               <p>Loading...</p>
             ) : (

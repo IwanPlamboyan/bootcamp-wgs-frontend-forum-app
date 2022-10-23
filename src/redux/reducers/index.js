@@ -6,6 +6,7 @@ import user from './user';
 import sidebar from './sidebar';
 import category from './category';
 import post from './post';
+import comment from './comment';
 
 // menggabungkan beberapa reducer
-export default combineReducers({ auth, user, sidebar, category, post });
+export default combineReducers({ auth, user, sidebar, category, post, comment });

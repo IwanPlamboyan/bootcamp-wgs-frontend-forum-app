@@ -5,7 +5,7 @@ import Layout from './Layout';
 import CardPost from '../components/CardPost';
 import { getAllPostByCategoryId } from '../redux/actions/post';
 
-const Tag = () => {
+const Category = () => {
   const dispatch = useDispatch();
   const { getAllPostByCategoryIdResult, getAllPostByCategoryIdLoading, getAllPostByCategoryIdError } = useSelector((state) => state.post);
 
@@ -42,4 +42,4 @@ const Tag = () => {
   );
 };
 
-export default Tag;
+export default Category;

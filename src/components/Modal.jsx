@@ -3,6 +3,7 @@ import swal from 'sweetalert';
 import { useSelector, useDispatch } from 'react-redux';
 import { editProfile, resetEditProfile } from '../redux/actions/user';
 import { FaUserEdit } from 'react-icons/fa';
+import { SlClose } from 'react-icons/sl';
 import { refreshToken } from '../redux/actions/auth';
 
 const Modal = ({ onClose, visible, isUpdated }) => {
@@ -63,9 +64,7 @@ const Modal = ({ onClose, visible, isUpdated }) => {
   return (
     <div id="container" onClick={handleOnClose} className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="bg-white px-8 py-5 rounded w-[480px] relative">
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" className="absolute top-3 right-3 hover:cursor-pointer" id="icon-close">
-          <path d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10ZM9.17 14.83l5.66-5.66M14.83 14.83 9.17 9.17" stroke="#FF8A65" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-        </svg>
+        <SlClose className="w-7 h-7 z-50 absolute top-3 right-3 hover:cursor-pointer text-red-400" id="icon-close" />
 
         <div className="flex justify-center gap-2 items-center mb-5">
           <FaUserEdit className="w-7 h-7" />

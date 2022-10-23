@@ -1,5 +1,5 @@
 // mengimport contansta atau varibel dengan key dan value yang sama di file types dalam folder actions
-import { REGISTER, RESET_REGISTER, LOGIN, LOGOUT, REFRESH_TOKEN } from '../actions/types';
+import { REGISTER, RESET_REGISTER, LOGIN, LOGOUT, RESET_LOGOUT, REFRESH_TOKEN } from '../actions/types';
 
 // state awal untuk authentication
 const initialState = {
@@ -22,6 +22,7 @@ const initialState = {
   username: false,
   email: false,
   image_url: '',
+  roles: false,
 };
 
 // reducer authentication
@@ -51,6 +52,7 @@ const auth = (state = initialState, action) => {
         username: action.payload.username,
         email: action.payload.email,
         image_url: action.payload.image_url,
+        roles: action.payload.roles,
       };
     case LOGOUT:
       return {
@@ -63,6 +65,14 @@ const auth = (state = initialState, action) => {
         username: false,
         email: false,
         image_url: false,
+        roles: false,
+      };
+    case RESET_LOGOUT:
+      return {
+        ...state,
+        logoutResult: false,
+        logoutLoading: false,
+        logoutError: false,
       };
     case REFRESH_TOKEN:
       return {
@@ -74,6 +84,7 @@ const auth = (state = initialState, action) => {
         username: action.payload.username,
         email: action.payload.email,
         image_url: action.payload.image_url,
+        roles: action.payload.roles,
       };
     default:
       return state;

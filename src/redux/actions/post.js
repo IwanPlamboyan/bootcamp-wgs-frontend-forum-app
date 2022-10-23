@@ -3,57 +3,6 @@ import { GET_ALL_POST_BY_CATEGORY_ID, GET_POST_BY_ID, GET_ALL_POST_BY_USER_ID, A
 import axios, { axiosJWT } from '../../api/axios';
 import swal from 'sweetalert';
 
-// export const getPost = (data) => {
-//   return (dispatch) => {
-//     // loading
-//     dispatch({
-//       type: GET_POST,
-//       posts: false,
-//       tempId: false,
-//       hasMore: false,
-//       payload: true,
-//       data: false,
-//       errorMessage: false,
-//     });
-
-//     // post token API
-//     axios({
-//       method: 'get',
-//       url: `/forum/post?search_query=${data.keyword}&lastId=${data.lastId}&limit=${data.limit}`,
-//       timeout: 120000,
-//       data: data,
-//     })
-//       .then((response) => {
-//         // jika response berhasil
-//         dispatch({
-//           type: GET_POST,
-//           payload: {
-//             posts: response.data.result,
-//             tempId: response.data.lastId,
-//             hasMore: response.data.hasMore,
-//             loading: false,
-//             data: response.data,
-//             errorMessage: false,
-//           },
-//         });
-//       })
-//       .catch((error) => {
-//         // jika response error/gagal
-//         dispatch({
-//           type: GET_POST,
-//           payload: {
-//             posts: false,
-//             tempId: false,
-//             hasMore: false,
-//             loading: false,
-//             data: false,
-//             errorMessage: error.message,
-//           },
-//         });
-//       });
-//   };
-// };
-
 export const getAllPostByCategoryId = (id) => {
   return (dispatch) => {
     // loading
@@ -66,7 +15,7 @@ export const getAllPostByCategoryId = (id) => {
     // get API
     axios({
       method: 'get',
-      url: `/forum/category/${id}`,
+      url: `/forum/post/category/${id}`,
       timeout: 120000,
     })
       .then((response) => {
@@ -184,7 +133,7 @@ export const addPost = (data) => {
       errorMessage: false,
     });
 
-    // post token API
+    // post API
     axiosJWT({
       method: 'post',
       url: '/forum/post',
@@ -233,7 +182,7 @@ export const deletePost = (id) => {
       errorMessage: false,
     });
 
-    // delete token API
+    // delete API
     axiosJWT({
       method: 'delete',
       url: `/forum/post/${id}`,

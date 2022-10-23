@@ -1,4 +1,4 @@
-import { REGISTER, LOGIN, LOGOUT, REFRESH_TOKEN, RESET_REGISTER } from './types';
+import { REGISTER, RESET_REGISTER, LOGIN, LOGOUT, RESET_LOGOUT, REFRESH_TOKEN } from './types';
 import axios from '../../api/axios';
 import jwt_decoded from 'jwt-decode';
 import swal from 'sweetalert';
@@ -85,6 +85,7 @@ export const login = (data) => {
             username: decoded.username,
             email: decoded.email,
             image_url: decoded.image_url,
+            roles: decoded.roles,
           },
         });
         // memanggil pop-up sweetalert success
@@ -102,6 +103,7 @@ export const login = (data) => {
             username: false,
             email: false,
             image_url: '',
+            roles: false,
           },
         });
         // memanggil pop-up sweetalert error
@@ -137,7 +139,7 @@ export const logout = () => {
             errorMessage: false,
           },
         });
-        window.location = '/';
+        swal('Berhasil', 'Logout berhasil', 'success');
       })
       .catch((error) => {
         // jika response error/gagal
@@ -149,9 +151,14 @@ export const logout = () => {
             errorMessage: error.message,
           },
         });
+        swal('Gagal', error.response.data.msg, 'error');
       });
   };
 };
+
+export const resetLogout = () => ({
+  type: RESET_LOGOUT,
+});
 
 export const refreshToken = () => {
   return (dispatch) => {
@@ -159,6 +166,11 @@ export const refreshToken = () => {
     dispatch({
       type: REFRESH_TOKEN,
       payload: true,
+      userId: false,
+      username: false,
+      email: false,
+      image_url: false,
+      roles: false,
       data: false,
       errorMessage: false,
     });
@@ -180,6 +192,7 @@ export const refreshToken = () => {
             username: decoded.username,
             email: decoded.email,
             image_url: decoded.image_url,
+            roles: decoded.roles,
             data: response.data,
             errorMessage: false,
           },
@@ -196,6 +209,7 @@ export const refreshToken = () => {
             username: false,
             email: false,
             image_url: '',
+            roles: false,
             errorMessage: error.message,
           },
         });
