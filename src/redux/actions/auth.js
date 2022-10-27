@@ -1,6 +1,5 @@
 import { REGISTER, RESET_REGISTER, LOGIN, LOGOUT, RESET_LOGOUT, REFRESH_TOKEN } from './types';
 import axios from '../../api/axios';
-import jwt_decoded from 'jwt-decode';
 import swal from 'sweetalert';
 
 // membuat action untuk register
@@ -74,18 +73,12 @@ export const login = (data) => {
     })
       .then((response) => {
         // jika response berhasil
-        const decoded = jwt_decoded(response.data.accessToken);
         dispatch({
           type: LOGIN,
           payload: {
             loading: false,
             data: response.data,
             errorMessage: false,
-            userId: decoded.userId,
-            username: decoded.username,
-            email: decoded.email,
-            image_url: decoded.image_url,
-            roles: decoded.roles,
           },
         });
         // memanggil pop-up sweetalert success
@@ -99,11 +92,6 @@ export const login = (data) => {
             loading: false,
             data: false,
             errorMessage: error.message,
-            userId: false,
-            username: false,
-            email: false,
-            image_url: '',
-            roles: false,
           },
         });
         // memanggil pop-up sweetalert error
@@ -166,11 +154,6 @@ export const refreshToken = () => {
     dispatch({
       type: REFRESH_TOKEN,
       payload: true,
-      userId: false,
-      username: false,
-      email: false,
-      image_url: false,
-      roles: false,
       data: false,
       errorMessage: false,
     });
@@ -183,16 +166,10 @@ export const refreshToken = () => {
     })
       .then((response) => {
         // jika response berhasil
-        const decoded = jwt_decoded(response.data.accessToken);
         dispatch({
           type: REFRESH_TOKEN,
           payload: {
             loading: false,
-            userId: decoded.userId,
-            username: decoded.username,
-            email: decoded.email,
-            image_url: decoded.image_url,
-            roles: decoded.roles,
             data: response.data,
             errorMessage: false,
           },
@@ -205,11 +182,6 @@ export const refreshToken = () => {
           payload: {
             loading: false,
             data: false,
-            userId: false,
-            username: false,
-            email: false,
-            image_url: '',
-            roles: false,
             errorMessage: error.message,
           },
         });

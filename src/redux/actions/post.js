@@ -1,47 +1,7 @@
-import { GET_ALL_POST_BY_CATEGORY_ID, GET_POST_BY_ID, GET_ALL_POST_BY_USER_ID, ADD_POST, DELETE_POST, RESET_ADD_POST } from './types';
+import { GET_POST_BY_ID, GET_ALL_POST_BY_USER_ID, ADD_POST, DELETE_POST, RESET_ADD_POST } from './types';
 
 import axios, { axiosJWT } from '../../api/axios';
 import swal from 'sweetalert';
-
-export const getAllPostByCategoryId = (id) => {
-  return (dispatch) => {
-    // loading
-    dispatch({
-      type: GET_ALL_POST_BY_CATEGORY_ID,
-      payload: true,
-      errorMessage: false,
-    });
-
-    // get API
-    axios({
-      method: 'get',
-      url: `/forum/post/category/${id}`,
-      timeout: 120000,
-    })
-      .then((response) => {
-        // jika response berhasil
-        dispatch({
-          type: GET_ALL_POST_BY_CATEGORY_ID,
-          payload: {
-            loading: false,
-            data: response.data,
-            errorMessage: false,
-          },
-        });
-      })
-      .catch((error) => {
-        // jika response error/gagal
-        dispatch({
-          type: GET_ALL_POST_BY_CATEGORY_ID,
-          payload: {
-            loading: false,
-            data: false,
-            errorMessage: error.message,
-          },
-        });
-      });
-  };
-};
 
 export const getPostById = (id) => {
   return (dispatch) => {

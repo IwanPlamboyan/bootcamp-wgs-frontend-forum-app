@@ -3,7 +3,11 @@ import { axiosJWT } from '../api/axios';
 import Layout from './Layout';
 import ReactPaginate from 'react-paginate';
 import SearchBar from '../components/SearchBar';
+import Modal from '../components/Modal';
 import { FaUserEdit } from 'react-icons/fa';
+import { AiOutlineUserSwitch, AiOutlineCheck } from 'react-icons/ai';
+import { BiChevronDown } from 'react-icons/bi';
+import swal from 'sweetalert';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -14,6 +18,12 @@ const Users = () => {
   const [keyword, setKeyword] = useState('');
   const [query, setQuery] = useState('');
   const [msg, setMsg] = useState('');
+
+  const [showModal, setShowModal] = useState(false);
+  const [selectedRole, setSelectedRole] = useState('');
+  const [userId, setUserId] = useState('');
+  const [username, setUsername] = useState('');
+  const handleOnClose = () => setShowModal(false);
 
   useEffect(() => {
     getUsers();
@@ -42,7 +52,17 @@ const Users = () => {
     setKeyword(query);
   };
 
-  const handleEdit = () => {};
+  const handleEditRole = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axiosJWT.patch(`/users/moderator/${userId}`, { roles: selectedRole });
+      handleOnClose();
+      getUsers();
+      swal('Berhasil', response.data.msg, 'success');
+    } catch (error) {
+      swal('Gagal!', error.response.data.msg, 'error');
+    }
+  };
 
   return (
     <Layout>
@@ -67,7 +87,6 @@ const Users = () => {
                     <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Email</th>
                     <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Roles</th>
                     <th className="p-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Action</th>
-                    {/* <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"></th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -92,10 +111,26 @@ const Users = () => {
                         </span>
                       </td>
                       <td className="border-b border-gray-200 bg-white text-sm">
-                        <button type="button" className="flex justify-center items-center gap-1 rounded-sm bg-green-400 py-1 px-3 text-gray-500 hover:text-gray-700 hover:bg-green-500 hover:shadow-md transition-colors" onClick={handleEdit}>
-                          <FaUserEdit className="w-4 h-4" />
-                          <p>Edit</p>
-                        </button>
+                        {user.roles !== 'admin' ? (
+                          <button
+                            type="button"
+                            className="flex justify-center items-center gap-1 rounded-sm bg-green-400 py-1 px-3 text-gray-500 hover:text-gray-700 hover:bg-green-500 hover:shadow-md transition-colors"
+                            onClick={() => {
+                              setShowModal(true);
+                              setSelectedRole(user.roles);
+                              setUserId(user.id);
+                              setUsername(user.username);
+                            }}
+                          >
+                            <FaUserEdit className="w-4 h-4" />
+                            <p>Edit</p>
+                          </button>
+                        ) : (
+                          <button className="flex justify-center items-center gap-1 rounded-sm bg-green-400 py-1 px-3 text-gray-500 opacity-40 cursor-auto">
+                            <FaUserEdit className="w-4 h-4" />
+                            <p>Edit</p>
+                          </button>
+                        )}
                       </td>
                     </tr>
                   ))}
@@ -123,6 +158,45 @@ const Users = () => {
           </nav>
         </div>
       </div>
+
+      <Modal onClose={handleOnClose} visible={showModal}>
+        <div className="flex justify-center gap-2 items-center mb-5">
+          <AiOutlineUserSwitch className="w-7 h-7" />
+          <h1 className="font-semibold text-2xl text-gray-700">Edit Role User</h1>
+        </div>
+
+        <form onSubmit={handleEditRole}>
+          <div className="px-5 border-gray-200 bg-white mt-8 font-medium">
+            <p className="text-gray-900 whitespace-no-wrap text-center">Username : {username}</p>
+          </div>
+          <div className="mt-2 px-5 w-full font-medium h-40">
+            <div className="pl-5 bg-blue-600 text-white w-full p-2 flex items-center justify-between rounded">
+              Role : {selectedRole ? selectedRole : 'Select Role'}
+              <BiChevronDown size={20} />
+            </div>
+
+            <ul className="bg-white mt-1 list-none max-h-20 overflow-y-auto cursor-pointer">
+              <li className="flex justify-between p-2 text-sm hover:bg-sky-600 hover:text-white border" onClick={() => setSelectedRole('moderator')}>
+                Moderator
+                {selectedRole === 'moderator' ? <AiOutlineCheck className="mr-2" /> : ''}
+              </li>
+              <li className="flex justify-between p-2 text-sm hover:bg-sky-600 hover:text-white border" onClick={() => setSelectedRole('user')}>
+                User
+                {selectedRole === 'user' ? <AiOutlineCheck className="mr-2" /> : ''}
+              </li>
+            </ul>
+          </div>
+
+          <div className="flex justify-end gap-3">
+            <button type="button" className="button bg-red-500 hover:bg-red-600" onClick={() => handleOnClose()}>
+              Close
+            </button>
+            <button type="submit" className="button">
+              Submit
+            </button>
+          </div>
+        </form>
+      </Modal>
     </Layout>
   );
 };

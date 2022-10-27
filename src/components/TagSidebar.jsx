@@ -13,16 +13,16 @@ const TagSidebar = () => {
   }, [limit]);
 
   return (
-    <div className="mt-24 mx-2 md:m-0 md:fixed md:top-24 md:right-2 lg:right-10 md:w-[310px] md:border bg-white">
-      <h6 className="text-center text-lg text-gray-800 py-4 border-b border-gray-200">
-        <Link to="/categories">Category</Link> Terbaru
+    <div className="mt-5 mx-2 md:m-0 md:fixed md:top-24 md:right-2 lg:right-10 md:w-[250px] lg:w-[310px] md:border md:rounded-sm bg-white dark:bg-dark">
+      <h6 className="text-center text-lg text-gray-800 py-4 border-b border-gray-200 dark:text-gray-200">
+        <Link to="/categories">5 Category</Link> Terbaru
       </h6>
 
       <div className="flex justify-center">
-        <div className="w-full text-center text-gray-900">
+        <div className="w-full text-center text-gray-900 dark:text-gray-50">
           {getCategoryResult ? (
             getCategoryResult.result.map((category) => (
-              <Link to={`/category/${category.id}`} className="inline-block px-6 py-2 border-b border-gray-200 w-full hover:text-blue-900 transition-colors duration-100" key={category.id}>
+              <Link to={`/category/${category.id}`} className="inline-block px-6 py-2 border-b border-gray-200 w-full text-[15px] hover:text-blue-900 transition-colors dark:hover:text-secondary" key={category.id}>
                 {category.title}
               </Link>
             ))
@@ -33,27 +33,6 @@ const TagSidebar = () => {
           )}
         </div>
       </div>
-      {/* <div className="mt-24 mb-7 md:mt-14">
-        <h6 className="font-medium pt-2">
-          <NavLink to="/tag">Category</NavLink> Terbaru :
-        </h6>
-        <div className="flex flex-wrap mt-4 gap-2 pb-5">
-          {getCategoryResult ? (
-            getCategoryResult.result.map((category) => (
-              <NavLink to={`/category/${category.id}`} key={category.id}>
-                <p className="px-3 text-sm button-category rounded-xl">#{category.title}</p>
-              </NavLink>
-            ))
-          ) : getCategoryLoading ? (
-            <p>Loading...</p>
-          ) : (
-            <p>{getCategoryError ? getCategoryError : 'Belum ada category'}</p>
-          )}
-          <NavLink to={`/category`}>
-            <p className="bg-gray-200 text-gray-600 hover:text-gray-800 px-2 py-1 text-sm inline-block rounded-full">+</p>
-          </NavLink>
-        </div>
-      </div> */}
     </div>
   );
 };

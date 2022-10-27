@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Layout from './Layout';
 import CardPost from '../components/CardPost';
-import Modal from '../components/Modal';
-import { useParams } from 'react-router-dom';
+import EditProfile from '../components/EditProfile';
+import { useParams, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserByUsername } from '../redux/actions/user';
 import { FaTrashAlt, FaUserEdit } from 'react-icons/fa';
+import { MdEditNote } from 'react-icons/md';
 import { getAllPostByUserId, deletePost } from '../redux/actions/post';
 import swal from 'sweetalert';
 
@@ -93,8 +94,14 @@ const Profile = () => {
                   ))
                 ) : (
                   <div className="bg-white p-3 text-center">
-                    <p className="font-medium text-lg mb-1">Kosong nih Gan</p>
+                    <p className="font-medium text-base mb-1">Kosong nih Gan</p>
                     <p className="text-sm text-gray-900">Daripada diem-diem bae, mending berkarya di sini. Tuang inspirasimu disini Semuanya boleh Gan. Yang penting... Tunjukkin Aslinya!</p>
+                    <Link to="/post/add" className="my-1 inline-block text-xs py-1 px-3 border rounded-sm bg-blue-400 text-gray-200 hover:bg-blue-500 transition-colors">
+                      <div className="flex items-center gap-1">
+                        <MdEditNote />
+                        Tulis Thread
+                      </div>
+                    </Link>
                   </div>
                 )}
               </>
@@ -106,7 +113,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      {userLogin.username === username && <Modal onClose={handleOnClose} visible={showModal} isUpdated={handleUpdated} />}
+      {userLogin.username === username && <EditProfile onClose={handleOnClose} visible={showModal} isUpdated={handleUpdated} />}
     </Layout>
   );
 };

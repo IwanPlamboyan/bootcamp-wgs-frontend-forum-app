@@ -19,7 +19,7 @@ const Categories = () => {
   const [categories, setCategories] = useState([]);
   const [lastId, setLastId] = useState(0);
   const [temptId, setTempId] = useState(0);
-  const [limit, setLimit] = useState(20);
+  const [limit, setLimit] = useState(10);
   const [keyword, setKeyword] = useState('');
   const [query, setQuery] = useState('');
   const [hasMore, setHasMore] = useState('');
@@ -137,7 +137,7 @@ const Categories = () => {
                 {roles === 'moderator' || roles === 'admin' ? <p className="bg-white py-3 px-2 sm:px-5 border rounded-sm">{index + 1}.</p> : ''}
 
                 <Link to={`/category/${category.id}`} className="group link-categories">
-                  <p className="text-lg transition-transform duration-500 group-hover:text-blue-500 group-hover:translate-x-1">{category.title}</p>
+                  <p className="text-base transition-transform duration-500 group-hover:text-blue-500 group-hover:translate-x-1">{category.title}</p>
                   <IoMdArrowDropright className="w-6 h-6 ease-in-out transition-transform duration-700 group-hover:translate-x-2 group-hover:text-blue-400" />
                 </Link>
 

@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
     <>
       <Navbar />
       <Sidebar />
-      <main className="mt-[72px]">
+      <main className="bg-body pt-[73px] dark:bg-[#070D17]">
         <div className={`container mx-auto pr-2 lg:px-[100px] transition-all duration-700 ${openSidebar && username ? 'pl-[95px]' : 'pl-2'}`}>{children}</div>
       </main>
     </>

@@ -1,5 +1,6 @@
 // mengimport contansta atau varibel dengan key dan value yang sama di file types dalam folder actions
 import { REGISTER, RESET_REGISTER, LOGIN, LOGOUT, RESET_LOGOUT, REFRESH_TOKEN } from '../actions/types';
+import jwt_decoded from 'jwt-decode';
 
 // state awal untuk authentication
 const initialState = {
@@ -27,6 +28,7 @@ const initialState = {
 
 // reducer authentication
 const auth = (state = initialState, action) => {
+  const user = [state.userId, state.username, state.email, state.image_url, state.roles];
   switch (action.type) {
     case REGISTER:
       return {
@@ -43,16 +45,24 @@ const auth = (state = initialState, action) => {
         registerError: false,
       };
     case LOGIN:
+      if (action.payload.data) {
+        const decoded = jwt_decoded(action.payload.data.accessToken);
+        user[0] = decoded.userId;
+        user[1] = decoded.username;
+        user[2] = decoded.email;
+        user[3] = decoded.image_url;
+        user[4] = decoded.roles;
+      }
       return {
         ...state,
         accessToken: action.payload.data,
         loginLoading: action.payload.loading,
         loginError: action.payload.errorMessage,
-        userId: action.payload.userId,
-        username: action.payload.username,
-        email: action.payload.email,
-        image_url: action.payload.image_url,
-        roles: action.payload.roles,
+        userId: user[0],
+        username: user[1],
+        email: user[2],
+        image_url: user[3],
+        roles: user[4],
       };
     case LOGOUT:
       return {
@@ -75,16 +85,24 @@ const auth = (state = initialState, action) => {
         logoutError: false,
       };
     case REFRESH_TOKEN:
+      if (action.payload.data) {
+        const decoded = jwt_decoded(action.payload.data.accessToken);
+        user[0] = decoded.userId;
+        user[1] = decoded.username;
+        user[2] = decoded.email;
+        user[3] = decoded.image_url;
+        user[4] = decoded.roles;
+      }
       return {
         ...state,
         accessToken: action.payload.data,
         getTokenLoading: action.payload.loading,
         getTokenError: action.payload.errorMessage,
-        userId: action.payload.userId,
-        username: action.payload.username,
-        email: action.payload.email,
-        image_url: action.payload.image_url,
-        roles: action.payload.roles,
+        userId: user[0],
+        username: user[1],
+        email: user[2],
+        image_url: user[3],
+        roles: user[4],
       };
     default:
       return state;

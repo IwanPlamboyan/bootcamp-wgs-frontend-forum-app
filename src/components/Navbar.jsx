@@ -3,18 +3,22 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, resetLogout, refreshToken } from '../redux/actions/auth';
 import { toggleSidebar } from '../redux/actions/sidebar';
-import { BiMenu } from 'react-icons/bi';
+import { themeSwitch } from '../redux/actions/theme';
+import { AiOutlineLogout } from 'react-icons/ai';
+import { BiMenu, BiUser } from 'react-icons/bi';
 import { CgLogIn } from 'react-icons/cg';
+import { RiMoonFill } from 'react-icons/ri';
+import { BsSunFill } from 'react-icons/bs';
 import Avatar from './Avatar';
 import swal from 'sweetalert';
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { theme } = useSelector((state) => state.theme);
 
   // mengambil beberapa state di store mengenai authentication
   const { username, email, image_url, logoutResult } = useSelector((state) => state.auth);
-
   const [openMenuProfile, setOpenMenuProfile] = useState(false); //toggle menu profile
   const [showSidebar, setShowSidebar] = useState(true); //toggle sidebar
 
@@ -58,7 +62,7 @@ const Navbar = () => {
 
   return (
     <header>
-      <nav className="fixed top-0 w-full py-3 px-6 shadow-lg z-40 bg-white backdrop-blur-3xl opacity-[0.92]">
+      <nav className="fixed top-0 w-full py-3 px-6 shadow-lg z-40 bg-white backdrop-blur-3xl opacity-[0.92] dark:bg-dark dark:text-white">
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center">
             {username && <BiMenu className="w-7 h-7 cursor-pointer -translate-x-7" onClick={() => setShowSidebar(!showSidebar)} />}
@@ -68,31 +72,33 @@ const Navbar = () => {
             </NavLink>
           </div>
 
-          {/* search bar */}
-          {/* <div></div> */}
-
-          {username ? (
-            <div className="flex items-center gap-3 cursor-pointer z-10" onClick={() => setOpenMenuProfile(!openMenuProfile)}>
-              <div className="text-right">
-                <h4 className="translate-y-1 text-base font-semibold">{username}</h4>
-                <small className="inline-block text-gray-400 -translate-y-1">{email}</small>
+          <div className="flex items-center gap-3 sm:gap-12">
+            <button onClick={() => dispatch(themeSwitch(theme === 'dark' ? 'light' : 'dark'))}>{theme === 'light' ? <RiMoonFill size={21} /> : <BsSunFill size={21} />}</button>
+            {username ? (
+              <div className="flex items-center gap-3 cursor-pointer z-10" onClick={() => setOpenMenuProfile(!openMenuProfile)}>
+                <div className="text-right">
+                  <h4 className="translate-y-1 text-base font-semibold">{username}</h4>
+                  <small className="inline-block text-gray-400 -translate-y-1">{email}</small>
+                </div>
+                <Avatar imageUrl={image_url} width="8" height="8" />
               </div>
-              <Avatar imageUrl={image_url} width="8" height="8" />
-            </div>
-          ) : (
-            <NavLink to="/login" className="flex items-center gap-1 hover:text-gray-800 py-3 transition">
-              <CgLogIn className="w-6 h-6" />
-              <span>Login</span>
-            </NavLink>
-          )}
+            ) : (
+              <NavLink to="/login" className="flex items-center gap-1 hover:text-gray-800 py-3 transition">
+                <CgLogIn className="w-6 h-6" />
+                <span>Login</span>
+              </NavLink>
+            )}
+          </div>
         </div>
       </nav>
       <div className={`fixed -top-3 z-50 right-0 bottom-0 left-0 ${openMenuProfile ? '' : 'hidden'}`} onClick={(e) => closeMenuProfile(e)}>
         <div className="absolute right-14 top-[73px] z-30 w-44 origin-top-right rounded-md bg-gray-100 shadow-md shadow-gray-400 border border-gray-400">
-          <NavLink to={`/user/profile/${username}`} className="block w-full text-gray-600 hover:text-slate-900 hover:bg-gray-300 text-left px-6 py-2.5 text-sm">
+          <NavLink to={`/user/profile/${username}`} className="flex items-center gap-1 w-full text-gray-600 hover:text-slate-900 hover:bg-gray-300 text-left px-6 py-2.5 text-sm">
+            <BiUser />
             Profile
           </NavLink>
-          <button className="w-full text-gray-600 hover:text-slate-900 hover:bg-gray-300 text-left px-6 py-2.5 text-sm" onClick={handleLogout}>
+          <button className="flex items-center gap-1 w-full text-gray-600 hover:text-slate-900 hover:bg-gray-300 text-left px-6 py-2.5 text-sm" onClick={handleLogout}>
+            <AiOutlineLogout />
             Logout
           </button>
         </div>

@@ -1,5 +1,5 @@
 // mengimport contansta atau varibel dengan key dan value yang sama di file types dalam folder actions
-import { GET_ALL_POST_BY_CATEGORY_ID, GET_POST_BY_ID, GET_ALL_POST_BY_USER_ID, ADD_POST, DELETE_POST, RESET_ADD_POST } from '../actions/types';
+import { GET_POST_BY_ID, GET_ALL_POST_BY_USER_ID, ADD_POST, DELETE_POST, RESET_ADD_POST } from '../actions/types';
 
 const initialState = {
   getPostByIdResult: false,
@@ -21,13 +21,6 @@ const initialState = {
 
 const post = (state = initialState, action) => {
   switch (action.type) {
-    case GET_ALL_POST_BY_CATEGORY_ID:
-      return {
-        ...state,
-        getAllPostByCategoryIdResult: action.payload.data,
-        getAllPostByCategoryIdLoading: action.payload.loading,
-        getAllPostByCategoryIdError: action.payload.errorMessage,
-      };
     case GET_POST_BY_ID:
       return {
         ...state,

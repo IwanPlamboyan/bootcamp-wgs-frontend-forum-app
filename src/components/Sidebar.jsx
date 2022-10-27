@@ -3,12 +3,10 @@ import swal from 'sweetalert';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, resetLogout } from '../redux/actions/auth';
-import { AiOutlineHome, AiOutlineUserSwitch } from 'react-icons/ai';
+import { AiOutlineHome, AiOutlineUserSwitch, AiOutlineLogout } from 'react-icons/ai';
 import { MdEditNote } from 'react-icons/md';
-import { HiLogout, HiOutlineDuplicate } from 'react-icons/hi';
 import { CgNotes } from 'react-icons/cg';
-import { BiUser } from 'react-icons/bi';
-// import SidebarItem from './SidebarItem';
+import { BiUser, BiHash } from 'react-icons/bi';
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -41,7 +39,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className={`fixed top-0 bottom-0 left-0 bg-white px-1 shadow-lg transition-transform duration-700 ${openSidebar ? '' : '-translate-x-24'} ${username ? '' : 'hidden'}`}>
+    <div className={`fixed top-0 bottom-0 left-0 bg-white px-1 shadow-lg transition-transform duration-700 ${openSidebar ? '' : '-translate-x-24'} ${username ? '' : 'hidden'} dark:bg-dark`}>
       <div className="px-5 pt-24 flex flex-col gap-4">
         <div>
           <NavLink to="/" className={`item-link-sidebar ${url === '' ? 'bg-blue-500 text-white' : ''}`}>
@@ -55,7 +53,7 @@ const Sidebar = () => {
         </div>
         <div>
           <NavLink to="/categories" className={`item-link-sidebar ${url === 'categories' ? 'bg-blue-500 text-white' : ''}`}>
-            <HiOutlineDuplicate className="w-6 h-6" />
+            <BiHash className="w-6 h-6" />
           </NavLink>
         </div>
         <div>
@@ -64,7 +62,7 @@ const Sidebar = () => {
           </NavLink>
         </div>
 
-        <hr />
+        <hr className="dark:bg-gray-500" />
 
         {roles === 'admin' && (
           <>
@@ -78,12 +76,13 @@ const Sidebar = () => {
                 <CgNotes className="w-6 h-6" />
               </NavLink>
             </div>
+            <hr />
           </>
         )}
 
         <div className="absolute bottom-8">
           <div className="item-link-sidebar cursor-pointer" onClick={handleLogout}>
-            <HiLogout className="w-6 h-6" />
+            <AiOutlineLogout className="w-6 h-6" />
           </div>
         </div>
       </div>

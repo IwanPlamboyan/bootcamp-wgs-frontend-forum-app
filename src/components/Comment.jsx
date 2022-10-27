@@ -35,7 +35,7 @@ const Comment = ({ comment }) => {
   };
 
   return (
-    <div className="w-full bg-white border pt-7 px-7 mb-2 relative">
+    <div className="w-full bg-white border pt-7 px-7 mb-1.5 relative">
       {username === comment.user.username && (
         <div className="absolute top-3 right-2">
           <BiDotsVerticalRounded className="w-5 h-5 cursor-pointer" onClick={() => setOpenDeleteComment(!openDeleteComment)} />
