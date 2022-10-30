@@ -8,9 +8,11 @@ export const register = (data) => {
     // loading
     dispatch({
       type: REGISTER,
-      payload: true,
-      data: false,
-      errorMessage: false,
+      payload: {
+        loading: true,
+        data: false,
+        errorMessage: false,
+      },
     });
 
     // post register API
@@ -59,9 +61,11 @@ export const login = (data) => {
     // loading
     dispatch({
       type: LOGIN,
-      payload: true,
-      data: false,
-      errorMessage: false,
+      payload: {
+        loading: true,
+        data: false,
+        errorMessage: false,
+      },
     });
 
     // post login API
@@ -106,9 +110,11 @@ export const logout = () => {
     // loading
     dispatch({
       type: LOGOUT,
-      payload: true,
-      data: false,
-      errorMessage: false,
+      payload: {
+        loading: true,
+        data: false,
+        errorMessage: false,
+      },
     });
 
     // post logout API
@@ -153,9 +159,11 @@ export const refreshToken = () => {
     // loading
     dispatch({
       type: REFRESH_TOKEN,
-      payload: true,
-      data: false,
-      errorMessage: false,
+      payload: {
+        loading: true,
+        data: false,
+        errorMessage: false,
+      },
     });
 
     // get token API

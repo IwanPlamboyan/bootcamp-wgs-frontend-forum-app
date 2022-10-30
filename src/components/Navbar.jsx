@@ -62,7 +62,7 @@ const Navbar = () => {
 
   return (
     <header>
-      <nav className="fixed top-0 w-full py-3 px-6 shadow-lg z-40 bg-white backdrop-blur-3xl opacity-[0.92] dark:bg-dark dark:text-white">
+      <nav className="fixed top-0 w-full py-3 px-6 shadow-lg z-40 bg-white backdrop-blur-3xl opacity-[0.92] dark:bg-[#070D17] dark:text-white">
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center">
             {username && <BiMenu className="w-7 h-7 cursor-pointer -translate-x-7" onClick={() => setShowSidebar(!showSidebar)} />}
@@ -92,12 +92,12 @@ const Navbar = () => {
         </div>
       </nav>
       <div className={`fixed -top-3 z-50 right-0 bottom-0 left-0 ${openMenuProfile ? '' : 'hidden'}`} onClick={(e) => closeMenuProfile(e)}>
-        <div className="absolute right-14 top-[73px] z-30 w-44 origin-top-right rounded-md bg-gray-100 shadow-md shadow-gray-400 border border-gray-400">
-          <NavLink to={`/user/profile/${username}`} className="flex items-center gap-1 w-full text-gray-600 hover:text-slate-900 hover:bg-gray-300 text-left px-6 py-2.5 text-sm">
+        <div className="absolute right-14 top-[73px] z-30 w-44 origin-top-right rounded-md bg-gray-100 shadow-md shadow-gray-400 border border-gray-400 dark:bg-dark">
+          <NavLink to={`/user/profile/${username}`} className="flex items-center gap-1 w-full text-gray-600 hover:text-slate-900 hover:bg-gray-300 text-left px-6 py-2.5 text-sm dark:text-gray-200 dark:hover:bg-gray-700">
             <BiUser />
             Profile
           </NavLink>
-          <button className="flex items-center gap-1 w-full text-gray-600 hover:text-slate-900 hover:bg-gray-300 text-left px-6 py-2.5 text-sm" onClick={handleLogout}>
+          <button className="flex items-center gap-1 w-full text-gray-600 hover:text-slate-900 hover:bg-gray-300 text-left px-6 py-2.5 text-sm dark:text-gray-200 dark:hover:bg-gray-700" onClick={handleLogout}>
             <AiOutlineLogout />
             Logout
           </button>

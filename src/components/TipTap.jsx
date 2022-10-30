@@ -58,10 +58,10 @@ const MenuBar = ({ editor }) => {
   );
 };
 
-const TipTap = ({ setValue, autofocus, clear }) => {
+const TipTap = ({ setValue, autofocus, clear, content }) => {
   const editor = useEditor({
     extensions: [StarterKit, Underline],
-    content: ``,
+    content: `${content ? content : ''}`,
     autofocus: autofocus,
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
@@ -74,7 +74,7 @@ const TipTap = ({ setValue, autofocus, clear }) => {
   }
 
   return (
-    <div className="text-editor">
+    <div className="text-editor dark:border-white">
       <MenuBar editor={editor} />
       <EditorContent editor={editor} />
     </div>

@@ -7,7 +7,7 @@ const SearchBar = ({ query, setQuery, searchData }) => {
       <form onSubmit={searchData}>
         <label className="relative block">
           <input
-            className="placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-xl py-2 pl-5 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 text-base dark:bg-dark dark:border-borderDark"
+            className="placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-xl py-2 pl-5 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 text-base dark:bg-[#070D17] dark:border-borderDark dark:text-gray-100"
             placeholder="Cari..."
             type="text"
             value={query}

@@ -1,4 +1,4 @@
-import { EDIT_PROFILE, RESET_EDIT_PROFILE, GET_USER_BY_USERNAME } from './types';
+import { EDIT_PROFILE, RESET_EDIT_PROFILE, GET_USER_BY_USERNAME, CHANGE_PASSWORD, RESET_CHANGE_PASSWORD } from './types';
 
 import axios, { axiosJWT } from '../../api/axios';
 
@@ -8,11 +8,14 @@ export const getUserByUsername = (username) => {
     // loading
     dispatch({
       type: GET_USER_BY_USERNAME,
-      payload: true,
-      errorMessage: false,
+      payload: {
+        loading: true,
+        data: false,
+        errorMessage: false,
+      },
     });
 
-    // get token API
+    // get API
     axios({
       method: 'get',
       url: `/users/${username}`,
@@ -49,12 +52,14 @@ export const editProfile = (id, data) => {
     // loading
     dispatch({
       type: EDIT_PROFILE,
-      payload: true,
-      data: false,
-      errorMessage: false,
+      payload: {
+        loading: false,
+        data: false,
+        errorMessage: false,
+      },
     });
 
-    // get token API
+    // pacth API
     axiosJWT({
       method: 'patch',
       url: `/users/${id}`,
@@ -89,4 +94,54 @@ export const editProfile = (id, data) => {
 // action untuk mereset state edit profile
 export const resetEditProfile = () => ({
   type: RESET_EDIT_PROFILE,
+});
+
+// action untuk mengubah password
+export const changePassword = (id, data) => {
+  return (dispatch) => {
+    // loading
+    dispatch({
+      type: CHANGE_PASSWORD,
+      payload: {
+        loading: true,
+        data: false,
+        errorMessage: false,
+      },
+    });
+
+    // pacth API
+    axiosJWT({
+      method: 'patch',
+      url: `/users/password/${id}`,
+      timeout: 120000,
+      data: data,
+    })
+      .then((response) => {
+        // jika response berhasil
+        dispatch({
+          type: CHANGE_PASSWORD,
+          payload: {
+            loading: false,
+            data: response.data,
+            errorMessage: false,
+          },
+        });
+      })
+      .catch((error) => {
+        // jika response error/gagal
+        dispatch({
+          type: CHANGE_PASSWORD,
+          payload: {
+            loading: false,
+            data: false,
+            errorMessage: error.response.data.msg,
+          },
+        });
+      });
+  };
+};
+
+// action untuk mereset state changePassword
+export const resetChangePassword = () => ({
+  type: RESET_CHANGE_PASSWORD,
 });

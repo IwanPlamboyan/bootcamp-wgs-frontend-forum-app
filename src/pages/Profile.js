@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Layout from './Layout';
 import CardPost from '../components/CardPost';
 import EditProfile from '../components/EditProfile';
+import ChangePassword from '../components/ChangePassword';
 import { useParams, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserByUsername } from '../redux/actions/user';
 import { FaTrashAlt, FaUserEdit } from 'react-icons/fa';
 import { MdEditNote } from 'react-icons/md';
+import { GoKey } from 'react-icons/go';
 import { getAllPostByUserId, deletePost } from '../redux/actions/post';
+import LoadingCard from '../components/LoadingCard';
 import swal from 'sweetalert';
 
 const Profile = () => {
@@ -16,11 +19,15 @@ const Profile = () => {
   const userLogin = useSelector((state) => state.auth);
   const { getAllPostByUserIdResult, getAllPostByUserIdLoading, getAllPostByUserIdError, deletePostResult } = useSelector((state) => state.post);
 
-  const [showModal, setShowModal] = useState(false);
+  const [showEditProfile, setShowEditProfile] = useState(false);
+  const [showChangePassword, setShowChangePassword] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
   const { username } = useParams();
 
-  const handleOnClose = () => setShowModal(false);
+  const handleOnClose = () => {
+    setShowEditProfile(false);
+    setShowChangePassword(false);
+  };
   const handleUpdated = () => setIsUpdated(!isUpdated);
 
   useEffect(() => {
@@ -51,10 +58,10 @@ const Profile = () => {
   return (
     <Layout>
       <div className="container py-3 mx-auto">
-        <div className="sm:flex sm:gap-5">
-          <div className="w-full sm:w-[800px] md:w-[620px] lg:w-[580px] xl:w-[500px] mb-14">
+        <div className="sm:flex md:gap-5">
+          <div className="w-full sm:w-[700px] lg:w-[580px] xl:w-[500px] mb-14">
             {getUserByUsernameResult ? (
-              <div className="sm:fixed bg-white border w-full sm:w-[345px] p-5 overflow-hidden">
+              <div className="sm:fixed bg-white border w-full sm:w-[300px] md:w-[345px] p-5 overflow-hidden dark:bg-[#070D17] dark:border-borderDark dark:text-white">
                 <div className="mx-auto w-64 h-64 border rounded-full overflow-hidden m-0">
                   <img src={getUserByUsernameResult.image_url} alt="Foto-profile" className="block w-full h-full" />
                 </div>
@@ -63,27 +70,35 @@ const Profile = () => {
                   <h1 className="text-2xl font-semibold">{getUserByUsernameResult.fullname}</h1>
                   <p className="text-sm italic">{getUserByUsernameResult.roles}</p>
                   {getUserByUsernameResult.description && <p className="mt-2 text-left leading-5 text-sm">{getUserByUsernameResult.description}</p>}
-                  <button className={`button w-full flex ${userLogin.username !== username ? 'hidden' : ''}`} onClick={() => setShowModal(true)}>
-                    <FaUserEdit className="w-5 h-5" />
-                    Edit Profile
-                  </button>
+                  {userLogin.username === username && (
+                    <>
+                      <button className="mt-7 button w-full flex bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-800" onClick={() => setShowEditProfile(true)}>
+                        <FaUserEdit className="w-5 h-5" />
+                        Edit Profile
+                      </button>
+                      <button className="mt-1 button w-full flex bg-green-500 hover:bg-green-600 focus:ng-bg-green-700 active:bg-green-800" onClick={() => setShowChangePassword(true)}>
+                        <GoKey className="w-5 h-5" />
+                        Ubah Password
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             ) : getUserByUsernameLoading ? (
-              <p>Loading...</p>
+              <LoadingCard />
             ) : (
               <p>{getUserByUsernameError ? getUserByUsernameError : 'Data Kosong'}</p>
             )}
           </div>
           <div className="w-full overflow-hidden z-10">
-            <div className="border bg-white text-center p-5 mb-2">
+            <div className="border bg-white text-center p-5 mb-2 dark:bg-[#070D17] dark:border-borderDark dark:text-white">
               <h3 className="text-2xl font-semibold">Thread</h3>
             </div>
             {getAllPostByUserIdResult ? (
               <>
                 {getAllPostByUserIdResult.result.length > 0 ? (
                   getAllPostByUserIdResult.result.map((post) => (
-                    <div key={post.id} className="group h-64 mb-1 border p-3 rounded-md overflow-hidden bg-white relative">
+                    <div key={post.id} className="group h-64 mb-1 border p-3 rounded-md overflow-hidden bg-white relative dark:bg-[#070D17] dark:border-borderDark">
                       <CardPost post={post} />
                       {userLogin.username === username && (
                         <div className="absolute right-5 opacity-80 transition-opacity group-hover:opacity-100 bottom-3">
@@ -106,14 +121,22 @@ const Profile = () => {
                 )}
               </>
             ) : getAllPostByUserIdLoading ? (
-              <p>Loading...</p>
+              <>
+                <LoadingCard />
+                <LoadingCard />
+              </>
             ) : (
               <p>{getAllPostByUserIdError}</p>
             )}
           </div>
         </div>
       </div>
-      {userLogin.username === username && <EditProfile onClose={handleOnClose} visible={showModal} isUpdated={handleUpdated} />}
+      {userLogin.username === username && (
+        <>
+          <EditProfile onClose={handleOnClose} visible={showEditProfile} isUpdated={handleUpdated} />
+          <ChangePassword onClose={handleOnClose} visible={showChangePassword} />
+        </>
+      )}
     </Layout>
   );
 };

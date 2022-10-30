@@ -31,19 +31,20 @@ const EditProfile = ({ onClose, visible, isUpdated }) => {
       dispatch(refreshToken());
       dispatch(resetEditProfile());
     }
-  }, [editProfileResult]);
-
-  useEffect(() => {
     if (editProfileError) {
       swal('Berhasil', editProfileError, 'error');
       dispatch(resetEditProfile());
     }
-  }, [editProfileError]);
+  }, [editProfileResult, editProfileError]);
 
   const loadImage = (e) => {
-    const image = e.target.files[0];
-    setFotoProfile(image);
-    setPreview(URL.createObjectURL(image));
+    try {
+      const image = e.target.files[0];
+      setFotoProfile(image);
+      setPreview(URL.createObjectURL(image));
+    } catch (error) {
+      setPreview('');
+    }
   };
 
   const onSubmitEditProfile = async (e) => {
@@ -59,26 +60,24 @@ const EditProfile = ({ onClose, visible, isUpdated }) => {
     <Modal visible={visible} onClose={onClose}>
       <div className="flex justify-center gap-2 items-center mb-5">
         <FaUserEdit className="w-7 h-7" />
-        <h1 className="font-semibold text-2xl text-gray-700">Edit Profile</h1>
+        <h1 className="font-semibold text-2xl text-gray-700 dark:text-white">Edit Profile</h1>
       </div>
 
       <form onSubmit={onSubmitEditProfile}>
         <label className="block">
-          <span className="block text-sm font-medium text-slate-700">Username</span>
+          <span className="block text-sm font-medium text-slate-700 dark:text-white">Username</span>
           <input type="text" disabled className="input-edit-profile" value={getUserByUsernameResult?.username} />
         </label>
         <label className="block">
-          <span className="block text-sm font-medium text-slate-700">Email</span>
+          <span className="block text-sm font-medium text-slate-700 dark:text-white">Email</span>
           <input type="email" disabled className="input-edit-profile" value={getUserByUsernameResult?.email} />
         </label>
         <label className="block">
-          <span className="block text-sm font-medium text-slate-700">Nama Lengkap</span>
+          <span className="block text-sm font-medium text-slate-700 dark:text-white">Nama Lengkap</span>
           <input type="text" className="input-edit-profile" value={fullName} onChange={(e) => setFullName(e.target.value)} />
         </label>
         <div className="flex items-center gap-2 mb-4">
-          <div className="shrink-0">
-            <img className="h-16 w-16 object-cover rounded-full img-preview" src={preview} alt="Foto_profile" />
-          </div>
+          <div className="shrink-0">{preview ? <img className="h-16 w-16 object-cover rounded-full img-preview" src={preview} alt="Foto_profile" /> : <img className="h-16 w-16 object-cover rounded-full" />}</div>
           <label className="block w-full">
             <span className="sr-only">Choose profile photo</span>
             <input
@@ -90,7 +89,7 @@ const EditProfile = ({ onClose, visible, isUpdated }) => {
           </label>
         </div>
         <label className="block">
-          <span className="block text-sm font-medium text-slate-700">Description</span>
+          <span className="block text-sm font-medium text-slate-700 dark:text-white">Description</span>
           <textarea className="input-edit-profile resize-y h-20" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
         </label>
         <div className="flex justify-end gap-3">

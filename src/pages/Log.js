@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import moment from 'moment';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import SearchBar from '../components/SearchBar';
@@ -56,10 +55,10 @@ const Log = () => {
     <>
       <Navbar />
       <Sidebar />
-      <main className="mt-[72px]">
+      <main className="pt-[72px] min-h-screen bg-body dark:bg-dark">
         <div className={`container mx-auto pr-2 transition-all duration-700 ${openSidebar && username ? 'pl-[95px]' : 'pl-2'}`}>
           <div className="container mx-auto py-3 pb-16">
-            <div className="w-full bg-white border mb-6 py-3 px-2 overflow-hidden">
+            <div className="w-full bg-white border mb-6 py-3 px-2 overflow-hidden dark:bg-[#070D17] dark:border-borderDark dark:text-white">
               <div className="w-full mb-4">
                 <h5 className="text-3xl font-semibold text-center mt-3 mb-5">Data Log</h5>
 
@@ -73,55 +72,61 @@ const Log = () => {
                   <table className="min-w-full leading-normal">
                     <thead>
                       <tr>
-                        <th className="px-1 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">No</th>
-                        <th className="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Username</th>
-                        <th className="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Email</th>
-                        <th className="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Role</th>
-                        <th className="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Ip Client</th>
-                        <th className="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Request Method</th>
-                        <th className="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Endpoint</th>
-                        <th className="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status Code</th>
-                        <th className="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Content Length</th>
-                        <th className="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Response Time</th>
-                        <th className="px-4 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">TimeStamp</th>
+                        <th className="px-1 table-th">No</th>
+                        <th className="px-4 table-th">Username</th>
+                        <th className="px-4 table-th">Email</th>
+                        <th className="px-4 table-th">Role</th>
+                        <th className="px-4 table-th">Ip Client</th>
+                        <th className="px-4 table-th">Request Method</th>
+                        <th className="px-4 table-th">Endpoint</th>
+                        <th className="px-4 table-th">Status Code</th>
+                        <th className="px-4 table-th">Content Length</th>
+                        <th className="px-4 table-th">Response Time</th>
+                        <th className="px-4 table-th">TimeStamp</th>
                       </tr>
                     </thead>
                     <tbody>
                       {logs.map((log, index) => (
                         <tr key={log.id}>
-                          <td className="px-1 py-3 border-b border-gray-200 bg-white text-sm">{index + 1}.</td>
-                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{log.username}</p>
+                          <td className="px-1 py-3 border-b border-gray-200 bg-white text-sm dark:bg-[#070D17] dark:border-borderDark">{index + 1}.</td>
+                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm dark:bg-[#070D17] dark:border-borderDark">
+                            <p className="text-gray-900 whitespace-no-wrap dark:text-white">{log.username}</p>
                           </td>
-                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{log.email}</p>
+                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm dark:bg-[#070D17] dark:border-borderDark">
+                            <p className="text-gray-900 whitespace-no-wrap dark:text-white">{log.email}</p>
                           </td>
-                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{log.roles}</p>
+                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm dark:bg-[#070D17] dark:border-borderDark">
+                            <p className="text-gray-900 whitespace-no-wrap dark:text-white">{log.roles}</p>
                           </td>
-                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{log.client_ip}</p>
+                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm dark:bg-[#070D17] dark:border-borderDark">
+                            <p className="text-gray-900 whitespace-no-wrap dark:text-white">{log.client_ip}</p>
                           </td>
-                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{log.request_method}</p>
+                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm dark:bg-[#070D17] dark:border-borderDark">
+                            <div
+                              className={`p-1 bg-blue-500 text-center shadow-lg ${
+                                log.request_method === 'GET' ? 'bg-green-500' : log.request_method === 'POST' ? 'bg-yellow-500' : log.request_method === 'PUT' ? 'bg-blue-500' : 'bg-red-500'
+                              }`}
+                            >
+                              <p className="text-white whitespace-no-wrap">{log.request_method}</p>
+                            </div>
                           </td>
-                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{log.endpoint}</p>
+                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm dark:bg-[#070D17] dark:border-borderDark">
+                            <p className="text-gray-900 whitespace-no-wrap dark:text-gray-50">{log.endpoint}</p>
                           </td>
-                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm">
+                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm dark:bg-[#070D17] dark:border-borderDark">
                             <span className={`relative inline-block px-3 py-1 font-semibold leading-tight ${log.status_code === '200' ? 'text-green-100' : ''}`}>
                               <span aria-hidden className={`absolute inset-0 opacity-50 rounded-full ${log.status_code === '200' ? 'bg-green-600' : ''}`}></span>
                               <span className="relative">{log.status_code}</span>
                             </span>
                           </td>
-                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{log.content_length}</p>
+                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm dark:bg-[#070D17] dark:border-borderDark">
+                            <p className="text-gray-900 whitespace-no-wrap dark:text-white">{log.content_length}</p>
                           </td>
-                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{log.response_time} ms</p>
+                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm dark:bg-[#070D17] dark:border-borderDark">
+                            <p className="text-gray-900 whitespace-no-wrap dark:text-white">{log.response_time} ms</p>
                           </td>
-                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm">
-                            <p className="text-gray-900 whitespace-no-wrap">{moment(log.createdAt).format('LL')}</p>
+                          <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm dark:bg-[#070D17] dark:border-borderDark">
+                            <p className="text-gray-900 whitespace-no-wrap dark:text-white">{log.timestamp}</p>
                           </td>
                         </tr>
                       ))}

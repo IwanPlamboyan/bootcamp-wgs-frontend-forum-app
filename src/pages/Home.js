@@ -5,8 +5,15 @@ import CardPost from '../components/CardPost';
 import axios from '../api/axios';
 import SearchBar from '../components/SearchBar';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import LoadingCard from '../components/LoadingCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetDeletePost } from '../redux/actions/post';
+import { AiOutlineLoading } from 'react-icons/ai';
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const { deletePostResult } = useSelector((state) => state.post);
+
   const [posts, setPosts] = useState([]);
   const [lastId, setLastId] = useState(0);
   const [tempId, setTempId] = useState(0);
@@ -16,8 +23,22 @@ const Home = () => {
   const [query, setQuery] = useState('');
 
   useEffect(() => {
+    if (deletePostResult) {
+      reRenderByDeletePost();
+      dispatch(resetDeletePost());
+    }
+  }, [deletePostResult]);
+
+  useEffect(() => {
     getPost();
   }, [lastId, keyword]);
+
+  const reRenderByDeletePost = async () => {
+    const response = await axios.get(`/forum/post?search_query=${keyword}&lastId=${0}&limit=${limit}`);
+    setPosts(response.data.result);
+    setTempId(response.data.lastId);
+    setHasMore(response.data.hasMore);
+  };
 
   const getPost = async () => {
     const response = await axios.get(`/forum/post?search_query=${keyword}&lastId=${lastId}&limit=${limit}`);
@@ -48,21 +69,40 @@ const Home = () => {
 
       <TagSidebar />
 
-      <InfiniteScroll dataLength={posts.length} next={fetchMore} hasMore={hasMore} loader={<h4>Loading...</h4>}>
-        <div className="container mx-auto py-6 pr-2 sm:pl-2">
-          {posts.length > 0 ? (
-            posts.map((post) => (
-              <div key={post.id} className="inline-block m-1 w-full sm:w-[400px] h-64 border p-3 rounded-md overflow-hidden bg-white shadow-lg relative dark:bg-dark">
-                <CardPost post={post} />
-              </div>
-            ))
-          ) : (
-            <div className="bg-white p-3 md:pr-60 dark:bg-dark">
-              <p className="text-center">Data tidak ada</p>
+      <div className="pb-12 bg-body dark:bg-dark">
+        {posts.length > 0 && (
+          <InfiniteScroll
+            dataLength={posts.length}
+            next={fetchMore}
+            hasMore={hasMore}
+            loader={
+              <>
+                <LoadingCard />
+                <LoadingCard />
+                <LoadingCard />
+                <LoadingCard />
+              </>
+            }
+          >
+            <div className="container mx-auto pt-6 pr-2 sm:pr-0">
+              {posts.length > 0 ? (
+                posts.map((post) => (
+                  <div
+                    key={post.id}
+                    className="inline-block mx-1.5 my-1 w-full md:min-w-[400px] md:max-w-[400px] lg:max-w-[550px] xl:max-w-[400px] h-64 border p-3 rounded-md overflow-hidden bg-white shadow-lg relative dark:bg-[#070D17] dark:border-[#070D17] dark:hover:bg-black"
+                  >
+                    <CardPost post={post} />
+                  </div>
+                ))
+              ) : (
+                <div className="bg-white p-3 md:pr-60 dark:bg-slate-800">
+                  <p className="text-center">Data tidak ada</p>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      </InfiniteScroll>
+          </InfiniteScroll>
+        )}
+      </div>
     </Layout>
   );
 };

@@ -114,7 +114,7 @@ const Categories = () => {
   return (
     <Layout>
       <div className="container mx-auto py-3 lg:w-[850px] pb-16">
-        <div className="w-full bg-white border mb-6 p-3">
+        <div className="w-full bg-white border mb-6 p-3 dark:bg-[#070D17] dark:border-borderDark dark:text-white">
           <p className="text-3xl font-medium text-center">Forum</p>
           <div className="mt-5">
             <SearchBar query={query} setQuery={setQuery} searchData={searchData} />
@@ -134,7 +134,7 @@ const Categories = () => {
           <>
             {categories.map((category, index) => (
               <div className="mb-1 flex justify-between items-center gap-1 sm:gap-3" key={category.id}>
-                {roles === 'moderator' || roles === 'admin' ? <p className="bg-white py-3 px-2 sm:px-5 border rounded-sm">{index + 1}.</p> : ''}
+                {roles === 'moderator' || roles === 'admin' ? <p className="bg-white py-3 px-2 sm:px-5 border rounded-sm dark:bg-[#070D17] dark:border-borderDark dark:text-white">{index + 1}.</p> : ''}
 
                 <Link to={`/category/${category.id}`} className="group link-categories">
                   <p className="text-base transition-transform duration-500 group-hover:text-blue-500 group-hover:translate-x-1">{category.title}</p>

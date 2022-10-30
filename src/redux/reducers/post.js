@@ -1,5 +1,5 @@
 // mengimport contansta atau varibel dengan key dan value yang sama di file types dalam folder actions
-import { GET_POST_BY_ID, GET_ALL_POST_BY_USER_ID, ADD_POST, DELETE_POST, RESET_ADD_POST } from '../actions/types';
+import { GET_POST_BY_ID, GET_ALL_POST_BY_USER_ID, ADD_POST, EDIT_POST, DELETE_POST, RESET_ADD_POST, RESET_EDIT_POST, RESET_DELETE_POST } from '../actions/types';
 
 const initialState = {
   getPostByIdResult: false,
@@ -13,6 +13,10 @@ const initialState = {
   addPostResult: false,
   addPostLoading: false,
   addPostError: false,
+
+  editPostResult: false,
+  editPostLoading: false,
+  editPostError: false,
 
   deletePostResult: false,
   deletePostLoading: false,
@@ -49,12 +53,33 @@ const post = (state = initialState, action) => {
         addPostLoading: false,
         addPostError: false,
       };
+    case EDIT_POST:
+      return {
+        ...state,
+        editPostResult: action.payload.data,
+        editPostLoading: action.payload.loading,
+        editPostError: action.payload.errorMessage,
+      };
+    case RESET_EDIT_POST:
+      return {
+        ...state,
+        editPostResult: false,
+        editPostLoading: false,
+        editPostError: false,
+      };
     case DELETE_POST:
       return {
         ...state,
         deletePostResult: action.payload.data,
         deletePostLoading: action.payload.loading,
         deletePostError: action.payload.errorMessage,
+      };
+    case RESET_DELETE_POST:
+      return {
+        ...state,
+        deletePostResult: false,
+        deletePostLoading: false,
+        deletePostError: false,
       };
     default:
       return state;

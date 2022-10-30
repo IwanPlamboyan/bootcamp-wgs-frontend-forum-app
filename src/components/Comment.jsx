@@ -35,7 +35,7 @@ const Comment = ({ comment }) => {
   };
 
   return (
-    <div className="w-full bg-white border pt-7 px-7 mb-1.5 relative">
+    <div className="w-full bg-white border pt-7 px-7 mb-1.5 relative dark:bg-[#070D17] dark:border-borderDark dark:text-white">
       {username === comment.user.username && (
         <div className="absolute top-3 right-2">
           <BiDotsVerticalRounded className="w-5 h-5 cursor-pointer" onClick={() => setOpenDeleteComment(!openDeleteComment)} />
@@ -43,7 +43,7 @@ const Comment = ({ comment }) => {
           {openDeleteComment && (
             <>
               <div className="fixed z-40 top-0 right-0 bottom-0 left-0" onClick={(e) => closeModalDeleteComment(e)}></div>
-              <div className="absolute z-40 top-5 right-2 rounded-sm bg-gray-100 shadow shadow-gray-400 border border-gray-400">
+              <div className="absolute z-40 top-5 right-2 rounded-sm bg-gray-100 shadow shadow-gray-400 border border-gray-400 dark:bg-[#070D17] dark:border-borderDark">
                 <div className="flex gap-1 items-center w-24 text-gray-600 hover:text-slate-900 hover:bg-gray-300 text-left py-2 px-3 text-xs cursor-pointer" onClick={() => handleDeleteComment(comment.id)}>
                   <FaTrashAlt />
                   Hapus
@@ -56,7 +56,7 @@ const Comment = ({ comment }) => {
 
       <HeadPost user={comment.user} date={comment.createdAt} />
 
-      <hr className="mt-2 mb-5" />
+      <hr className="mt-2 mb-5 border-borderDark" />
       <div>
         <div className="mb-7">{parser(comment.name)}</div>
       </div>

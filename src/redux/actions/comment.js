@@ -8,9 +8,11 @@ export const addComment = (data) => {
     // loading
     dispatch({
       type: ADD_COMMENT,
-      payload: true,
-      data: false,
-      errorMessage: false,
+      payload: {
+        loading: true,
+        data: false,
+        errorMessage: false,
+      },
     });
 
     // post token API
@@ -54,12 +56,16 @@ export const resetAddComment = () => ({
 });
 
 export const deleteComment = (id) => {
+  console.log(id);
   return (dispatch) => {
     // loading
     dispatch({
       type: DELETE_COMMENT,
-      payload: true,
-      errorMessage: false,
+      payload: {
+        loading: true,
+        data: false,
+        errorMessage: false,
+      },
     });
 
     // delete token API

@@ -10,6 +10,8 @@ export const REFRESH_TOKEN = 'REFRESH_TOKEN';
 export const GET_USER_BY_USERNAME = 'GET_USER_BY_USERNAME';
 export const EDIT_PROFILE = 'EDIT_PROFILE';
 export const RESET_EDIT_PROFILE = 'RESET_EDIT_PROFILE';
+export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
+export const RESET_CHANGE_PASSWORD = 'RESET_CHANGE_PASSWORD';
 
 // type untuk toggle sidebar
 export const SIDEBAR_TOGGLE = 'SIDEBAR_TOGGLE';
@@ -29,8 +31,11 @@ export const RESET_DELETE_CATEGORY = 'RESET_DELETE_CATEGORY';
 export const GET_POST_BY_ID = 'GET_POST_BY_ID';
 export const GET_ALL_POST_BY_USER_ID = 'GET_ALL_POST_BY_USER_ID';
 export const ADD_POST = 'ADD_POST';
+export const EDIT_POST = 'EDIT_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const RESET_ADD_POST = 'RESET_ADD_POST';
+export const RESET_EDIT_POST = 'RESET_EDIT_POST';
+export const RESET_DELETE_POST = 'RESET_DELETE_POST';
 
 // comment type
 export const ADD_COMMENT = 'ADD_COMMENT';

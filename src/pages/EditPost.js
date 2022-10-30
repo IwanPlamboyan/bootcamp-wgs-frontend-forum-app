@@ -4,16 +4,17 @@ import TipTap from '../components/TipTap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCategory } from '../redux/actions/category';
 import { refreshToken } from '../redux/actions/auth';
-import { useNavigate } from 'react-router-dom';
-import { addPost, resetAddPost } from '../redux/actions/post';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getPostById, editPost, resetEditPost } from '../redux/actions/post';
 import { BiSad } from 'react-icons/bi';
 
-const CreatePost = () => {
+const EditPost = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { getTokenError, userId } = useSelector((state) => state.auth);
+  const { id } = useParams();
+  const { getTokenError, userId, username } = useSelector((state) => state.auth);
   const { getAllCategoryResult, getAllCategoryLoading, getAllCategoryError } = useSelector((state) => state.category);
-  const { addPostResult } = useSelector((state) => state.post);
+  const { getPostByIdResult, getPostByIdLoading, getPostByIdError, editPostResult } = useSelector((state) => state.post);
 
   const [title, setTitle] = useState('');
   const [categoryId, setCategoryId] = useState(0);
@@ -34,24 +35,31 @@ const CreatePost = () => {
   useEffect(() => {
     dispatch(refreshToken());
     dispatch(getAllCategory());
+    dispatch(getPostById(id));
   }, []);
 
   useEffect(() => {
+    if (getPostByIdResult) {
+      if (getPostByIdResult.user.username !== username) {
+        navigate('/');
+      } else {
+        setTitle(getPostByIdResult?.title);
+        setCategoryId(getPostByIdResult?.category_id);
+        setImage(getPostByIdResult?.image_name);
+        setPreview(getPostByIdResult?.image_url);
+        setBody(getPostByIdResult?.body);
+      }
+    }
     if (getTokenError) {
       navigate('/');
     }
-    if (addPostResult) {
-      setTitle('');
-      setCategoryId(0);
-      setImage('');
-      setPreview('');
-      setBody('');
-      dispatch(resetAddPost());
+    if (editPostResult) {
+      dispatch(resetEditPost());
       navigate('/');
     }
-  }, [getTokenError, addPostResult]);
+  }, [getPostByIdResult, getTokenError, editPostResult]);
 
-  const onSubmitAddPost = (e) => {
+  const onSubmitEditPost = (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('title', title);
@@ -59,19 +67,19 @@ const CreatePost = () => {
     formData.append('user_id', userId);
     formData.append('category_id', categoryId);
     formData.append('body', body);
-    dispatch(addPost(formData));
+    dispatch(editPost(id, formData));
   };
 
   return (
     <Layout>
       <div className="container mx-auto py-6">
         <div className="w-full bg-white border p-4 dark:bg-[#070D17] dark:border-borderDark dark:text-white">
-          <h1 className="text-2xl font-bold text-center">Buat Thread</h1>
+          <h1 className="text-2xl font-bold text-center">Edit Thread</h1>
         </div>
         <div className="w-full bg-white border py-7 px-3 pb-20 sm:px-10 md:px-20 mt-1 relative dark:bg-[#070D17] dark:border-borderDark dark:text-white">
           {getAllCategoryResult ? (
             <div>
-              <form onSubmit={onSubmitAddPost}>
+              <form onSubmit={onSubmitEditPost}>
                 <label className="block sm:flex sm:gap-[100px] sm:items-center mb-3">
                   <span className="block text-base font-medium text-slate-700 mb-1 cursor-pointer dark:text-white">Judul</span>
                   <input
@@ -80,7 +88,6 @@ const CreatePost = () => {
                     placeholder="Isi judul Thread"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    autoFocus={true}
                     required
                   />
                 </label>
@@ -135,7 +142,7 @@ const CreatePost = () => {
               <label>
                 <span className="block text-base font-medium text-slate-700 mb-1 mt-2 cursor-pointer dark:text-white">Deskripsi</span>
                 <div className="border rounded-sm dark:border-borderDark">
-                  <TipTap setValue={setBody} autofocus={false} />
+                  {getPostByIdResult ? <TipTap setValue={setBody} autofocus={false} content={getPostByIdResult?.body} /> : getPostByIdLoading ? 'Loading' : <div>{getPostByIdError}</div>}
                 </div>
               </label>
             </div>
@@ -161,4 +168,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default EditPost;

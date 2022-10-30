@@ -7,8 +7,10 @@ export const getCategory = (limit) => {
     // loading
     dispatch({
       type: GET_CATEGORY,
-      payload: true,
-      errorMessage: false,
+      payload: {
+        loading: true,
+        errorMessage: false,
+      },
     });
 
     // get API
@@ -47,8 +49,10 @@ export const getAllCategory = () => {
     // loading
     dispatch({
       type: GET_ALL_CATEGORY,
-      payload: true,
-      errorMessage: false,
+      payload: {
+        loading: true,
+        errorMessage: false,
+      },
     });
 
     // get API
@@ -87,8 +91,11 @@ export const getCategoryById = (id) => {
     // loading
     dispatch({
       type: GET_CATEGORY_BY_ID,
-      payload: true,
-      errorMessage: false,
+      payload: {
+        loading: true,
+        data: false,
+        errorMessage: false,
+      },
     });
 
     // get API
@@ -127,9 +134,11 @@ export const addCategory = (data) => {
     // loading
     dispatch({
       type: ADD_CATEGORY,
-      payload: true,
-      data: false,
-      errorMessage: false,
+      payload: {
+        loading: true,
+        data: false,
+        errorMessage: false,
+      },
     });
 
     // post API
@@ -178,9 +187,11 @@ export const editCategory = (id, data) => {
     // loading
     dispatch({
       type: EDIT_CATEGORY,
-      payload: true,
-      data: false,
-      errorMessage: false,
+      payload: {
+        loading: true,
+        data: false,
+        errorMessage: false,
+      },
     });
 
     // patch API
@@ -228,8 +239,11 @@ export const deleteCategory = (id) => {
     // loading
     dispatch({
       type: DELETE_CATEGORY,
-      payload: true,
-      errorMessage: false,
+      payload: {
+        loading: true,
+        data: false,
+        errorMessage: false,
+      },
     });
 
     // delete API

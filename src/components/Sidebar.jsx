@@ -39,44 +39,44 @@ const Sidebar = () => {
   };
 
   return (
-    <div className={`fixed top-0 bottom-0 left-0 bg-white px-1 shadow-lg transition-transform duration-700 ${openSidebar ? '' : '-translate-x-24'} ${username ? '' : 'hidden'} dark:bg-dark`}>
+    <div className={`fixed top-0 bottom-0 left-0 bg-white px-1 shadow-lg transition-transform duration-700 ${openSidebar ? '' : '-translate-x-24'} ${username ? '' : 'hidden'} dark:bg-[#070D17]`}>
       <div className="px-5 pt-24 flex flex-col gap-4">
         <div>
-          <NavLink to="/" className={`item-link-sidebar ${url === '' ? 'bg-blue-500 text-white' : ''}`}>
+          <NavLink to="/" className={`item-link-sidebar ${url === '' ? 'bg-linear text-white' : ''}`}>
             <AiOutlineHome className="w-6 h-6" />
           </NavLink>
         </div>
         <div>
-          <NavLink to={`/user/profile/${username}`} className={`item-link-sidebar ${url === `user/profile/${username}` ? 'bg-blue-500 text-white' : ''}`}>
+          <NavLink to={`/user/profile/${username}`} className={`item-link-sidebar ${url === `user/profile/${username}` ? 'bg-linear text-white' : ''}`}>
             <BiUser className="w-6 h-6" />
           </NavLink>
         </div>
         <div>
-          <NavLink to="/categories" className={`item-link-sidebar ${url === 'categories' ? 'bg-blue-500 text-white' : ''}`}>
+          <NavLink to="/categories" className={`item-link-sidebar ${url === 'categories' ? 'bg-linear text-white' : ''}`}>
             <BiHash className="w-6 h-6" />
           </NavLink>
         </div>
         <div>
-          <NavLink to="/post/add" className={`item-link-sidebar ${url === 'post/add' ? 'bg-blue-500 text-white' : ''}`}>
+          <NavLink to="/post/add" className={`item-link-sidebar ${url === 'post/add' ? 'bg-linear text-white' : ''}`}>
             <MdEditNote className="w-6 h-6" />
           </NavLink>
         </div>
 
-        <hr className="dark:bg-gray-500" />
+        <hr className="dark:border-borderDark" />
 
         {roles === 'admin' && (
           <>
             <div>
-              <NavLink to="/users" className={`item-link-sidebar ${url === 'users' ? 'bg-blue-500 text-white' : ''}`}>
+              <NavLink to="/users" className={`item-link-sidebar ${url === 'users' ? 'bg-linear text-white' : ''}`}>
                 <AiOutlineUserSwitch className="w-6 h-6" />
               </NavLink>
             </div>
             <div>
-              <NavLink to="/log" className={`item-link-sidebar ${url === 'log' ? 'bg-blue-500 text-white' : ''}`}>
+              <NavLink to="/log" className={`item-link-sidebar ${url === 'log' ? 'bg-linear text-white' : ''}`}>
                 <CgNotes className="w-6 h-6" />
               </NavLink>
             </div>
-            <hr />
+            <hr className="dark:border-borderDark" />
           </>
         )}
 

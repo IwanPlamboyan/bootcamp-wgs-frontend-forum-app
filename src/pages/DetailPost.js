@@ -7,7 +7,7 @@ import TipTap from '../components/TipTap';
 import parser from 'html-react-parser';
 import ReactPaginate from 'react-paginate';
 import axios from '../api/axios';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { VscChromeClose } from 'react-icons/vsc';
 import { BsFillReplyFill } from 'react-icons/bs';
@@ -94,10 +94,16 @@ const DetailThread = () => {
       <TagSidebar />
       <div className="container md:pr-[36%] lg:pr-[32%] xl:pr-[24%] pt-6 pb-14 px-2">
         {getPostByIdResult ? (
-          <div className="w-full bg-white border pt-7 px-7 mb-10">
-            {getPostByIdResult && <HeadPost user={getPostByIdResult.user} date={getPostByIdResult.createdAt} />}
+          <div className="w-full bg-white border pt-7 px-7 mb-10 dark:bg-[#070D17] dark:border-borderDark dark:text-white">
+            <div className="flex justify-between">
+              {getPostByIdResult && <HeadPost user={getPostByIdResult.user} date={getPostByIdResult.createdAt} />}
 
-            <hr className="my-6" />
+              <Link to={`/category/`} className="text-base text-gray-500">
+                #{getPostByIdResult.category.title}
+              </Link>
+            </div>
+
+            <hr className="my-6 dark:border-borderDark" />
 
             <div>
               <h2 className="text-3xl font-bold mb-10">{getPostByIdResult.title}</h2>
@@ -111,7 +117,7 @@ const DetailThread = () => {
               </div>
             </div>
 
-            <hr className="mt-6" />
+            <hr className="mt-6 dark:border-borderDark" />
 
             {/* button reply */}
             <div>
@@ -123,14 +129,14 @@ const DetailThread = () => {
 
             {/* modal comment/discussion */}
             {showReply && (
-              <div className="mb-6 p-4 border border-slate-300 bg-gray-200 rounded-sm transition duration-1000">
+              <div className="mb-6 p-4 border border-slate-300 bg-gray-200 rounded-sm transition duration-1000 dark:bg-[#070D17] dark:border-borderDark">
                 <strong className="text-lg block mb-2">Reply</strong>
-                <div className="w-full bg-slate-50 border">
+                <div className="w-full bg-slate-50 border border-borderDark dark:bg-[#070D17]">
                   <TipTap setValue={setReply} autofocus={true} clear={false} />
                 </div>
                 <form className="flex justify-end" onSubmit={tambahCommentSubmit}>
                   <button type="submit" className="mt-2 px-10 button">
-                    Post
+                    Comment
                   </button>
                 </form>
               </div>
@@ -145,7 +151,7 @@ const DetailThread = () => {
         {/* comments */}
         {comments.length > 0 ? (
           <>
-            <div className="flex items-center justify-between py-2 px-5 bg-white border">
+            <div className="flex items-center justify-between py-2 px-5 bg-white border dark:bg-[#070D17] dark:border-borderDark dark:text-white">
               <p className="text-sm text-gray-500">
                 Halaman : {rows ? page + 1 : 0} dari {pages}
               </p>
@@ -170,7 +176,7 @@ const DetailThread = () => {
               ))}
             </div>
 
-            <div className="flex items-center justify-between py-2 px-5 bg-white border">
+            <div className="flex items-center justify-between py-2 px-5 bg-white border dark:bg-[#070D17] dark:border-borderDark dark:text-white">
               <p className="text-sm text-gray-500">
                 Halaman : {rows ? page + 1 : 0} dari {pages}
               </p>
@@ -190,7 +196,7 @@ const DetailThread = () => {
             </div>
           </>
         ) : (
-          <div className="w-full bg-white border p-3 mb-2 relative">
+          <div className="w-full bg-white border p-3 mb-2 relative dark:bg-[#070D17] dark:border-borderDark dark:text-white">
             <p className="text-sm text-center">Masih belum ada komentar</p>
           </div>
         )}
