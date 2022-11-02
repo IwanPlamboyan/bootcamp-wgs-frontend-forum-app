@@ -1,5 +1,5 @@
 // mengimport contansta atau varibel dengan key dan value yang sama di file types dalam folder actions
-import { GET_POST_BY_ID, GET_ALL_POST_BY_USER_ID, ADD_POST, EDIT_POST, DELETE_POST, RESET_ADD_POST, RESET_EDIT_POST, RESET_DELETE_POST } from '../actions/types';
+import { GET_POST_BY_ID, GET_ALL_POST_BY_USER_ID, ADD_POST, EDIT_POST, DELETE_POST, RESET_ADD_POST, RESET_EDIT_POST, RESET_DELETE_POST, EDIT_POST_CATEGORY, RESET_EDIT_POST_CATEGORY } from '../actions/types';
 
 const initialState = {
   getPostByIdResult: false,
@@ -17,6 +17,10 @@ const initialState = {
   editPostResult: false,
   editPostLoading: false,
   editPostError: false,
+
+  editPostCategoryResult: false,
+  editPostCategoryLoading: false,
+  editPostCategoryError: false,
 
   deletePostResult: false,
   deletePostLoading: false,
@@ -66,6 +70,20 @@ const post = (state = initialState, action) => {
         editPostResult: false,
         editPostLoading: false,
         editPostError: false,
+      };
+    case EDIT_POST_CATEGORY:
+      return {
+        ...state,
+        editPostCategoryResult: action.payload.data,
+        editPostCategoryLoading: action.payload.loading,
+        editPostCategoryError: action.payload.errorMessage,
+      };
+    case RESET_EDIT_POST_CATEGORY:
+      return {
+        ...state,
+        editPostCategoryResult: false,
+        editPostCategoryLoading: false,
+        editPostCategoryError: false,
       };
     case DELETE_POST:
       return {

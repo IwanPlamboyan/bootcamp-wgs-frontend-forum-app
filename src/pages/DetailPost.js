@@ -24,6 +24,7 @@ const DetailThread = () => {
   const [comments, setComments] = useState([]);
   const [page, setPage] = useState(0);
   const [pages, setPages] = useState(0);
+  const [limit, setLimit] = useState(10);
   const [rows, setRows] = useState(0);
   const [modalPicture, setModalPicture] = useState(false);
   const [tempImgSrc, setTempImgSrc] = useState('');
@@ -33,7 +34,7 @@ const DetailThread = () => {
   const [reply, setReply] = useState('');
 
   const getCommentsByPostId = async () => {
-    const response = await axios.get(`/forum/comment?post_id=${id}&page=${page}`);
+    const response = await axios.get(`/forum/comment?post_id=${id}&page=${page}&limit=${limit}`);
     setComments(response.data.result);
     setPage(response.data.page);
     setPages(response.data.totalPage);

@@ -56,7 +56,7 @@ const Comment = ({ comment }) => {
 
       <HeadPost user={comment.user} date={comment.createdAt} />
 
-      <hr className="mt-2 mb-5 border-borderDark" />
+      <hr className="mt-2 mb-5 dark:border-borderDark" />
       <div>
         <div className="mb-7">{parser(comment.name)}</div>
       </div>

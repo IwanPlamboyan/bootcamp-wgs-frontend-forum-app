@@ -115,7 +115,7 @@ const Categories = () => {
     <Layout>
       <div className="container mx-auto py-3 lg:w-[850px] pb-16">
         <div className="w-full bg-white border mb-6 p-3 dark:bg-[#070D17] dark:border-borderDark dark:text-white">
-          <p className="text-3xl font-medium text-center">Forum</p>
+          <p className="text-3xl font-medium text-center">Category Forum</p>
           <div className="mt-5">
             <SearchBar query={query} setQuery={setQuery} searchData={searchData} />
           </div>

@@ -12,7 +12,7 @@ const Category = () => {
   const [posts, setPosts] = useState([]);
   const [lastId, setLastId] = useState(0);
   const [tempId, setTempId] = useState(0);
-  const [limit, setLimit] = useState(8);
+  const [limit, setLimit] = useState(6);
   const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {

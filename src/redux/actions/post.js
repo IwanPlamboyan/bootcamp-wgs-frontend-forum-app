@@ -1,4 +1,4 @@
-import { GET_POST_BY_ID, GET_ALL_POST_BY_USER_ID, ADD_POST, EDIT_POST, DELETE_POST, RESET_ADD_POST, RESET_EDIT_POST, RESET_DELETE_POST } from './types';
+import { GET_POST_BY_ID, GET_ALL_POST_BY_USER_ID, ADD_POST, EDIT_POST, DELETE_POST, RESET_ADD_POST, RESET_EDIT_POST, RESET_DELETE_POST, EDIT_POST_CATEGORY, RESET_EDIT_POST_CATEGORY } from './types';
 
 import axios, { axiosJWT } from '../../api/axios';
 import swal from 'sweetalert';
@@ -191,6 +191,58 @@ export const editPost = (id, data) => {
 
 export const resetEditPost = () => ({
   type: RESET_EDIT_POST,
+});
+
+export const editPostCategory = (id, data) => {
+  return (dispatch) => {
+    // loading
+    dispatch({
+      type: EDIT_POST_CATEGORY,
+      payload: {
+        loading: true,
+        data: false,
+        errorMessage: false,
+      },
+    });
+
+    // patch API
+    axiosJWT({
+      method: 'patch',
+      url: `/forum/post/category/${id}`,
+      timeout: 120000,
+      data: data,
+    })
+      .then((response) => {
+        // jika response berhasil
+        dispatch({
+          type: EDIT_POST_CATEGORY,
+          payload: {
+            loading: false,
+            data: response.data,
+            errorMessage: false,
+          },
+        });
+        // memanggil pop-up sweetalert success
+        swal('Berhasil', response.data.msg, 'success');
+      })
+      .catch((error) => {
+        // jika response error/gagal
+        dispatch({
+          type: EDIT_POST_CATEGORY,
+          payload: {
+            loading: false,
+            data: false,
+            errorMessage: error.message,
+          },
+        });
+        // memanggil pop-up sweetalert error
+        swal('Gagal!', error.response.data.msg, 'error');
+      });
+  };
+};
+
+export const resetEditPostCategory = () => ({
+  type: RESET_EDIT_POST_CATEGORY,
 });
 
 export const deletePost = (id) => {

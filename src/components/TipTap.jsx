@@ -58,7 +58,7 @@ const MenuBar = ({ editor }) => {
   );
 };
 
-const TipTap = ({ setValue, autofocus, clear, content }) => {
+const TipTap = ({ setValue, autofocus, clear, content, isEditable }) => {
   const editor = useEditor({
     extensions: [StarterKit, Underline],
     content: `${content ? content : ''}`,
@@ -67,6 +67,7 @@ const TipTap = ({ setValue, autofocus, clear, content }) => {
       const html = editor.getHTML();
       setValue(html);
     },
+    editable: isEditable,
   });
 
   if (clear) {

@@ -32,9 +32,11 @@ export const GET_POST_BY_ID = 'GET_POST_BY_ID';
 export const GET_ALL_POST_BY_USER_ID = 'GET_ALL_POST_BY_USER_ID';
 export const ADD_POST = 'ADD_POST';
 export const EDIT_POST = 'EDIT_POST';
+export const EDIT_POST_CATEGORY = 'EDIT_POST_CATEGORY';
 export const DELETE_POST = 'DELETE_POST';
 export const RESET_ADD_POST = 'RESET_ADD_POST';
 export const RESET_EDIT_POST = 'RESET_EDIT_POST';
+export const RESET_EDIT_POST_CATEGORY = 'RESET_EDIT_POST_CATEGORY';
 export const RESET_DELETE_POST = 'RESET_DELETE_POST';
 
 // comment type

@@ -24,7 +24,7 @@ const ChangePassword = ({ onClose, visible }) => {
       setRepeatPassword('');
     }
     if (changePasswordError) {
-      swal('Berhasil', changePasswordError, 'error');
+      swal('Gagal', changePasswordError, 'error');
       dispatch(resetChangePassword());
     }
   }, [changePasswordResult, changePasswordError]);
