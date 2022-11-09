@@ -13,6 +13,7 @@ import { VscChromeClose } from 'react-icons/vsc';
 import { BsFillReplyFill } from 'react-icons/bs';
 import { getPostById } from '../redux/actions/post';
 import { addComment, resetAddComment, resetDeleteComment } from '../redux/actions/comment';
+import LoadingDetailPost from '../components/LoadingDetailPost';
 import swal from 'sweetalert';
 
 const DetailThread = () => {
@@ -144,7 +145,7 @@ const DetailThread = () => {
             )}
           </div>
         ) : getPostByIdLoading ? (
-          <p>Loading...</p>
+          <LoadingDetailPost />
         ) : (
           <p>{getPostByIdError ? getPostByIdError : 'Data Tidak ditemukan'}</p>
         )}
@@ -197,8 +198,8 @@ const DetailThread = () => {
             </div>
           </>
         ) : (
-          <div className="w-full bg-white border p-3 mb-2 relative dark:bg-[#070D17] dark:border-borderDark dark:text-white">
-            <p className="text-sm text-center">Masih belum ada komentar</p>
+          <div className="w-full bg-white text-gray-700 border p-2 mb-2 relative dark:bg-[#070D17] dark:border-borderDark dark:text-gray-300">
+            <p className="text-xs text-center">Masih belum ada komentar</p>
           </div>
         )}
       </div>

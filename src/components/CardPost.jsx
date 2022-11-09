@@ -1,19 +1,37 @@
-import React, { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import HeadThread from './HeadPost';
-import parser from 'html-react-parser';
 import { useSelector, useDispatch } from 'react-redux';
 import { deletePost } from '../redux/actions/post';
-import { BiDotsVerticalRounded } from 'react-icons/bi';
+import { BiDotsVerticalRounded, BiCommentDetail } from 'react-icons/bi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { TbEdit } from 'react-icons/tb';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import axios, { axiosJWT } from '../api/axios';
 import swal from 'sweetalert';
 
 const CardPost = ({ post }) => {
   const dispatch = useDispatch();
 
-  const { username, roles } = useSelector((state) => state.auth);
+  const { userId, username, roles } = useSelector((state) => state.auth);
   const [openMenuPost, setOpenMenuPost] = useState(false);
+  const [dataLikes, setDataLikes] = useState([]);
+  const [amountComment, setAmountComment] = useState();
+
+  useEffect(() => {
+    getLikesByPostId();
+    getAmountCommentsByPostId();
+  }, []);
+
+  const getLikesByPostId = async () => {
+    const response = await axios.get(`/forum/likes?postId=${post.id}`);
+    setDataLikes(response.data);
+  };
+
+  const getAmountCommentsByPostId = async () => {
+    const response = await axios.get(`/forum/comment?post_id=${post.id}`);
+    setAmountComment(response?.data?.totalRows);
+  };
 
   const closeModalMenuPost = (e) => {
     let element = e.target;
@@ -36,18 +54,57 @@ const CardPost = ({ post }) => {
     });
   };
 
+  const isLiked = () => {
+    let result = false;
+    dataLikes.map((like) => {
+      result = like.user_id == userId ? true : false;
+    });
+    return result;
+  };
+
+  const handleLike = async () => {
+    if (!username)
+      return swal({
+        icon: 'error',
+        title: '😌 MAAF',
+        text: 'Anda harus login dulu jika ingin memberikan like',
+      });
+    if (isLiked()) {
+      await axiosJWT.delete(`/forum/likes/${post.id}`);
+    } else {
+      await axiosJWT.post('/forum/likes', { postId: post.id });
+    }
+    return getLikesByPostId();
+  };
+
   return (
     <>
       {post ? (
         <div>
           <HeadThread user={post.user} date={post.createdAt} />
-          <NavLink to={`/post/${post.id}`} className="inline-block mt-2 h-[117px] overflow-hidden dark:text-gray-200">
-            <h2 className="text-[22px] leading-7 font-bold">{post.title}</h2>
-            <div className="mt-3 mx-[2px] thread-body">{parser(post.body)}</div>
-          </NavLink>
-          <Link to={`/category/${post.category.id}`} className="absolute left-3 bottom-3">
-            <p className="mt-4 text-sm button-category px-3 rounded-xl dark:bg-slate-800 dark:text-gray-300">#{post.category.title}</p>
+          <Link to={`/post/${post.id}`} className="flex mt-2 h-[117px] overflow-hidden dark:text-gray-200 gap-1">
+            <h2 className="text-xl leading-7 font-semibold">{post.title}</h2>
+            {post.image_url && (
+              <div className="flex-none w-[30%] place-self-end">
+                <img src={post.image_url} />
+              </div>
+            )}
           </Link>
+          <div className="absolute w-full bottom-3 left-0 flex justify-between px-3">
+            <div className="flex place-self-end gap-x-5 text-gray-800 dark:text-gray-200">
+              <span className="flex items-center gap-1.5">
+                {isLiked() ? <AiFillHeart size={20} className="text-red-500 cursor-pointer" onClick={handleLike} /> : <AiOutlineHeart size={20} className="cursor-pointer" onClick={handleLike} />}
+                <span className="text-sm">{dataLikes.length} Likes</span>
+              </span>
+              <Link to={`/post/${post.id}`} className="flex items-center gap-1.5">
+                <BiCommentDetail size={20} />
+                <span className="text-sm">{amountComment} Comments</span>
+              </Link>
+            </div>
+            <Link to={`/category/${post.category.id}`}>
+              <p className="text-sm button-category px-3 rounded-xl dark:bg-slate-800 dark:text-gray-300">#{post.category.title}</p>
+            </Link>
+          </div>
 
           {post.user.username === username || roles === 'admin' || roles === 'moderator' ? (
             <div className="absolute top-3 right-2">

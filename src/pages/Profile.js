@@ -6,12 +6,11 @@ import ChangePassword from '../components/ChangePassword';
 import { useParams, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserByUsername } from '../redux/actions/user';
-import { FaTrashAlt, FaUserEdit } from 'react-icons/fa';
+import { FaUserEdit } from 'react-icons/fa';
 import { MdEditNote } from 'react-icons/md';
 import { GoKey } from 'react-icons/go';
-import { getAllPostByUserId, deletePost } from '../redux/actions/post';
+import { getAllPostByUserId } from '../redux/actions/post';
 import LoadingCard from '../components/LoadingCard';
-import swal from 'sweetalert';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -40,20 +39,6 @@ const Profile = () => {
       dispatch(getAllPostByUserId(getUserByUsernameResult.id));
     }
   }, [getUserByUsernameResult, deletePostResult]);
-
-  const handleDeletePost = (id) => {
-    swal({
-      title: 'HAPUS',
-      text: 'Apakah anda yakin ingin menghapusnya?',
-      icon: 'warning',
-      buttons: true,
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        dispatch(deletePost(id));
-      }
-    });
-  };
 
   return (
     <Layout>
@@ -104,11 +89,6 @@ const Profile = () => {
                   getAllPostByUserIdResult.result.map((post) => (
                     <div key={post.id} className="group h-64 mb-1 border p-3 rounded-md overflow-hidden bg-white relative dark:bg-[#070D17] dark:border-borderDark">
                       <CardPost post={post} />
-                      {userLogin.username === username && (
-                        <div className="absolute right-5 opacity-80 transition-opacity group-hover:opacity-100 bottom-3">
-                          <FaTrashAlt className="w-5 h-5 transition-colors text-gray-500 cursor-pointer hover:text-gray-900" onClick={() => handleDeletePost(post.id)} />
-                        </div>
-                      )}
                     </div>
                   ))
                 ) : (
