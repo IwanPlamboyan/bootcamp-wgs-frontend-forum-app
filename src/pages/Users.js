@@ -80,7 +80,6 @@ const Users = () => {
               <table className="min-w-full leading-normal">
                 <thead>
                   <tr>
-                    <th className="px-2 table-th">No</th>
                     <th className="px-5 table-th">Foto Profile</th>
                     <th className="px-5 table-th">Username</th>
                     <th className="px-5 table-th">Email</th>
@@ -91,7 +90,6 @@ const Users = () => {
                 <tbody>
                   {users.map((user, index) => (
                     <tr key={user.id}>
-                      <td className="px-2 py-3 border-b border-gray-200 bg-white text-sm dark:bg-[#070D17] dark:border-borderDark dark:text-white">{index + 1}.</td>
                       <td className="px-5 py-3 border-b border-gray-200 bg-white text-sm dark:bg-[#070D17] dark:border-borderDark dark:text-white">
                         <div className="w-10 h-10">
                           <img className="w-full h-full rounded-full" src={user.image_url} alt="foto_profile" />
@@ -150,9 +148,9 @@ const Users = () => {
               onPageChange={changePage}
               containerClassName="list-none flex justify-center items-center mb-5 text-sm gap-1"
               pageLinkClassName="py-2 px-4 rounded font-normal hover:bg-blue-500 hover:text-white border-2 transition-colors dark:text-white"
-              previousClassName="py-2 px-4 rounded font-normal hover:bg-blue-500 hover:text-white border-2 transition-colors dark:text-white"
-              nextLinkClassName="py-2 px-4 rounded font-normal hover:bg-blue-500 hover:text-white border-2 transition-colors dark:text-white"
-              activeLinkClassName="bg-blue-500 text-white"
+              previousClassName={`py-2 px-4 rounded font-normal border-2 transition-colors ${page === 0 ? 'opacity-50 cursor-default' : 'hover:bg-blue-800 hover:text-white'}`}
+              nextLinkClassName={`py-2 px-4 rounded font-normal border-2 transition-colors ${page + 1 === pages ? 'opacity-50 cursor-default' : 'hover:bg-blue-800 hover:text-white'}`}
+              activeLinkClassName="bg-blue-800 text-white"
             />
           </nav>
         </div>

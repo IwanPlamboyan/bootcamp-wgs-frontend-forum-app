@@ -80,7 +80,7 @@ const Category = () => {
               ))
             ) : (
               <div className="bg-white p-3 md:pr-60 dark:bg-dark">
-                <p className="text-center">Data tidak ada</p>
+                <p className="text-center">Data masih kosong</p>
               </div>
             )}
           </div>

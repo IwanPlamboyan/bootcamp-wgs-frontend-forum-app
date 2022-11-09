@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout, resetLogout, refreshToken } from '../redux/actions/auth';
 import { toggleSidebar } from '../redux/actions/sidebar';
 import { themeSwitch } from '../redux/actions/theme';
-import { AiOutlineLogout } from 'react-icons/ai';
+import { AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
 import { BiMenu, BiUser } from 'react-icons/bi';
-import { CgLogIn } from 'react-icons/cg';
 import { RiMoonFill } from 'react-icons/ri';
 import { BsSunFill } from 'react-icons/bs';
 import Avatar from './Avatar';
@@ -83,8 +82,8 @@ const Navbar = () => {
                 <Avatar imageUrl={image_url} width="8" height="8" />
               </div>
             ) : (
-              <NavLink to="/login" className="flex items-center gap-1 hover:text-gray-800 py-3 transition">
-                <CgLogIn className="w-6 h-6" />
+              <NavLink to="/login" className="flex items-center gap-0.5 hover:text-gray-800 py-3 transition">
+                <AiOutlineLogin className="w-5 h-5" />
                 <span>Login</span>
               </NavLink>
             )}

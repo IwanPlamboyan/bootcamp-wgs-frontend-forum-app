@@ -39,7 +39,7 @@ export const getUserByUsername = (username) => {
           payload: {
             loading: false,
             data: false,
-            errorMessage: error.message,
+            errorMessage: error.response.data.msg,
           },
         });
       });
@@ -84,7 +84,7 @@ export const editProfile = (id, data) => {
           payload: {
             loading: false,
             data: false,
-            errorMessage: error.message,
+            errorMessage: error.response.data.msg,
           },
         });
       });

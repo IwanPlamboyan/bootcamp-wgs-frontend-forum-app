@@ -9,7 +9,7 @@ const HeadPost = ({ user, date }) => {
         <Avatar imageUrl={user.image_url} />
         <div className="flex flex-col">
           <h4 className="font-medium text-base dark:text-white">{user.username}</h4>
-          <small className="text-slate-400 -mt-1">{moment(date).format('LL')}</small>
+          <small className="text-slate-400 -mt-1">{moment(date).fromNow()}</small>
         </div>
       </Link>
     </>

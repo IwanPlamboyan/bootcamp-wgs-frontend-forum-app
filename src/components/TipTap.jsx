@@ -2,6 +2,7 @@ import React from 'react';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
+import CharacterCount from '@tiptap/extension-character-count';
 import { FaBold, FaItalic, FaStrikethrough, FaCode, FaListOl, FaListUl, FaQuoteLeft, FaRedo, FaUndo, FaUnderline, FaMinus } from 'react-icons/fa';
 import { TbRectangle } from 'react-icons/tb';
 
@@ -58,9 +59,15 @@ const MenuBar = ({ editor }) => {
   );
 };
 
-const TipTap = ({ setValue, autofocus, clear, content, isEditable }) => {
+const TipTap = ({ setValue, autofocus, clear, content, isEditable, limit }) => {
   const editor = useEditor({
-    extensions: [StarterKit, Underline],
+    extensions: [
+      StarterKit,
+      Underline,
+      CharacterCount.configure({
+        limit,
+      }),
+    ],
     content: `${content ? content : ''}`,
     autofocus: autofocus,
     onUpdate: ({ editor }) => {
@@ -70,6 +77,8 @@ const TipTap = ({ setValue, autofocus, clear, content, isEditable }) => {
     editable: isEditable,
   });
 
+  const percentage = editor ? Math.round((100 / limit) * editor.storage.characterCount.characters()) : 0;
+
   if (clear) {
     editor.commands.clearContent();
   }
@@ -78,6 +87,19 @@ const TipTap = ({ setValue, autofocus, clear, content, isEditable }) => {
     <div className="text-editor dark:border-white">
       <MenuBar editor={editor} />
       <EditorContent editor={editor} />
+      {editor && (
+        <div className={`mt-4 mr-1 flex justify-end items-center text-[#68CEF8] ${editor.storage.characterCount.characters() === limit ? 'text-[#FB5151]' : ''}`}>
+          <svg height="20" width="20" viewBox="0 0 20 20" className="mr-2">
+            <circle r="10" cx="10" cy="10" fill="#e9ecef" />
+            <circle r="5" cx="10" cy="10" fill="transparent" stroke="currentColor" strokeWidth="10" strokeDasharray={`calc(${percentage} * 31.4 / 100) 31.4`} transform="rotate(-90) translate(-20)" />
+            <circle r="6" cx="10" cy="10" fill="white" />
+          </svg>
+
+          <div className="text-[#868e96]">
+            {editor.storage.characterCount.characters()}/{limit}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

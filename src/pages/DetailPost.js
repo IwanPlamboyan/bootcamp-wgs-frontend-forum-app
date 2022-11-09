@@ -133,7 +133,7 @@ const DetailThread = () => {
               <div className="mb-6 p-4 border border-slate-300 bg-gray-200 rounded-sm transition duration-1000 dark:bg-[#070D17] dark:border-borderDark">
                 <strong className="text-lg block mb-2">Reply</strong>
                 <div className="w-full bg-slate-50 border border-borderDark dark:bg-[#070D17]">
-                  <TipTap setValue={setReply} autofocus={true} clear={false} />
+                  <TipTap setValue={setReply} autofocus={true} clear={false} limit={1000} />
                 </div>
                 <form className="flex justify-end" onSubmit={tambahCommentSubmit}>
                   <button type="submit" className="mt-2 px-10 button">

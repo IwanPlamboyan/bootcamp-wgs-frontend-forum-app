@@ -69,7 +69,11 @@ const Profile = () => {
                   <h2 className="text-xl font-normal">{getUserByUsernameResult.username}</h2>
                   <h1 className="text-2xl font-semibold">{getUserByUsernameResult.fullname}</h1>
                   <p className="text-sm italic">{getUserByUsernameResult.roles}</p>
-                  {getUserByUsernameResult.description && <p className="mt-2 text-left leading-5 text-sm">{getUserByUsernameResult.description}</p>}
+                  {getUserByUsernameResult.description && (
+                    <div className="w-full overflow-hidden max-h-11">
+                      <p className="w-full text-left leading-5 text-sm">{getUserByUsernameResult.description}</p>
+                    </div>
+                  )}
                   {userLogin.username === username && (
                     <>
                       <button className="mt-7 button w-full flex bg-blue-600 hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-800" onClick={() => setShowEditProfile(true)}>
@@ -92,7 +96,7 @@ const Profile = () => {
           </div>
           <div className="w-full overflow-hidden z-10">
             <div className="border bg-white text-center p-5 mb-2 dark:bg-[#070D17] dark:border-borderDark dark:text-white">
-              <h3 className="text-2xl font-semibold">Thread</h3>
+              <h3 className="text-2xl font-semibold">Post</h3>
             </div>
             {getAllPostByUserIdResult ? (
               <>

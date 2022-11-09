@@ -59,6 +59,7 @@ const CreatePost = () => {
     formData.append('user_id', userId);
     formData.append('category_id', categoryId);
     formData.append('body', body);
+    formData.append('archive', false);
     dispatch(addPost(formData));
   };
 
@@ -66,7 +67,7 @@ const CreatePost = () => {
     <Layout>
       <div className="container mx-auto py-6">
         <div className="w-full bg-white border p-4 dark:bg-[#070D17] dark:border-borderDark dark:text-white">
-          <h1 className="text-2xl font-bold text-center">Buat Thread</h1>
+          <h1 className="text-2xl font-bold text-center">Buat Post</h1>
         </div>
         <div className="w-full bg-white border py-7 px-3 pb-20 sm:px-10 md:px-20 mt-1 relative dark:bg-[#070D17] dark:border-borderDark dark:text-white">
           {getAllCategoryResult ? (
@@ -135,7 +136,7 @@ const CreatePost = () => {
               <label>
                 <span className="block text-base font-medium text-slate-700 mb-1 mt-2 cursor-pointer dark:text-white">Deskripsi</span>
                 <div className="border rounded-sm dark:border-borderDark">
-                  <TipTap setValue={setBody} autofocus={false} />
+                  <TipTap setValue={setBody} autofocus={false} limit={20000} />
                 </div>
               </label>
             </div>

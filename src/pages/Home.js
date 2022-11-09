@@ -8,7 +8,6 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import LoadingCard from '../components/LoadingCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetDeletePost } from '../redux/actions/post';
-import { AiOutlineLoading } from 'react-icons/ai';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -24,23 +23,23 @@ const Home = () => {
 
   useEffect(() => {
     if (deletePostResult) {
-      reRenderByDeletePost();
+      reRenderPosts();
       dispatch(resetDeletePost());
     }
   }, [deletePostResult]);
 
   useEffect(() => {
-    getPost();
+    getPosts();
   }, [lastId, keyword]);
 
-  const reRenderByDeletePost = async () => {
+  const reRenderPosts = async () => {
     const response = await axios.get(`/forum/post?search_query=${keyword}&lastId=${0}&limit=${limit}`);
     setPosts(response.data.result);
     setTempId(response.data.lastId);
     setHasMore(response.data.hasMore);
   };
 
-  const getPost = async () => {
+  const getPosts = async () => {
     const response = await axios.get(`/forum/post?search_query=${keyword}&lastId=${lastId}&limit=${limit}`);
     const newPosts = response.data.result;
     setPosts([...posts, ...newPosts]);

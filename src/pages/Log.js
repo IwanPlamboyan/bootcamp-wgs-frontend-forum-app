@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import SearchBar from '../components/SearchBar';
 import ReactPaginate from 'react-paginate';
-import { axiosJWT } from '../api/axios';
+import axios from '../api/axios';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -29,7 +29,7 @@ const Log = () => {
   }, [page, keyword]);
 
   const getLog = async () => {
-    const response = await axiosJWT.get(`/log?search_query=${keyword}&page=${page}&limit=${limit}`);
+    const response = await axios.get(`/log?search_query=${keyword}&page=${page}&limit=${limit}`);
     setLogs(response.data.result);
     setPage(response.data.page);
     setPages(response.data.totalPage);
@@ -72,7 +72,6 @@ const Log = () => {
                   <table className="min-w-full leading-normal">
                     <thead>
                       <tr>
-                        <th className="px-1 table-th">No</th>
                         <th className="px-4 table-th">Username</th>
                         <th className="px-4 table-th">Email</th>
                         <th className="px-4 table-th">Role</th>
@@ -88,7 +87,6 @@ const Log = () => {
                     <tbody>
                       {logs.map((log, index) => (
                         <tr key={log.id}>
-                          <td className="px-1 py-3 border-b border-gray-200 bg-white text-sm dark:bg-[#070D17] dark:border-borderDark">{index + 1}.</td>
                           <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm dark:bg-[#070D17] dark:border-borderDark">
                             <p className="text-gray-900 whitespace-no-wrap dark:text-white">{log.username}</p>
                           </td>
@@ -102,11 +100,7 @@ const Log = () => {
                             <p className="text-gray-900 whitespace-no-wrap dark:text-white">{log.client_ip}</p>
                           </td>
                           <td className="px-4 py-3 border-b border-gray-200 bg-white text-sm dark:bg-[#070D17] dark:border-borderDark">
-                            <div
-                              className={`p-1 bg-blue-500 text-center shadow-lg ${
-                                log.request_method === 'GET' ? 'bg-green-500' : log.request_method === 'POST' ? 'bg-yellow-500' : log.request_method === 'PUT' ? 'bg-blue-500' : 'bg-red-500'
-                              }`}
-                            >
+                            <div className={`p-1 text-center shadow-lg ${log.request_method === 'GET' ? 'bg-green-500' : log.request_method === 'POST' ? 'bg-yellow-500' : log.request_method === 'PATCH' ? 'bg-blue-500' : 'bg-red-500'}`}>
                               <p className="text-white whitespace-no-wrap">{log.request_method}</p>
                             </div>
                           </td>
@@ -147,9 +141,9 @@ const Log = () => {
                   onPageChange={changePage}
                   containerClassName="list-none flex justify-center items-center mb-5 text-sm gap-1"
                   pageLinkClassName="py-2 px-4 rounded font-normal hover:bg-blue-500 hover:text-white border-2 transition-colors"
-                  previousClassName="py-2 px-4 rounded font-normal hover:bg-blue-500 hover:text-white border-2 transition-colors"
-                  nextLinkClassName="py-2 px-4 rounded font-normal hover:bg-blue-500 hover:text-white border-2 transition-colors"
-                  activeLinkClassName="bg-blue-500 text-white"
+                  previousClassName={`py-2 px-4 rounded font-normal border-2 transition-colors ${page === 0 ? 'opacity-50 cursor-default' : 'hover:bg-blue-800 hover:text-white'}`}
+                  nextLinkClassName={`py-2 px-4 rounded font-normal border-2 transition-colors ${page + 1 === pages ? 'opacity-50 cursor-default' : 'hover:bg-blue-800 hover:text-white'}`}
+                  activeLinkClassName="bg-blue-800 text-white"
                 />
               </nav>
             </div>

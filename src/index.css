@@ -144,7 +144,7 @@ button.is-active {
 }
 
 .ProseMirror {
-  @apply p-[10px] border-t border-[grey] bg-white min-h-[150px] outline-none focus:shadow-lg cursor-text dark:bg-[#070D17];
+  @apply p-[10px] border-t border-[grey] bg-white min-h-[150px] outline-none cursor-text dark:bg-[#070D17];
   border-radius: 0 0 5px 5px;
 }
 .ProseMirror > * + *,
